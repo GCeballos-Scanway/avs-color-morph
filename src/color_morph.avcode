@@ -1,0 +1,4379 @@
+extern public Point2DArray FeatLoc = Point2DArray{}
+extern public Image Templ = Image()
+extern public GrayModel StripeModel = GrayModel()
+extern public Point2D Prescaler = Point2D(X: 0.177500, Y: 0.177500)
+extern public Integer MarginUp = 25
+extern public Integer MarginDown = 25
+extern public Image DisplMap = Image()
+extern public String X_GCdir = "C:\\Users\\Gabriel Ceballos\\Nextcloud\\Industry\\2008_Walstead(D)\\AVS\\analiza kafelkowa\\zdjęcia"
+extern public String X_OSdir = "C:\\Users\\Olga Skiermut\\Desktop\\walstead dataset\\mono\\09.02 OBI\\rightCameraPhotos"
+extern public Point2D TemplStripeLoc = Point2D()
+extern public Integer SearchSize = 250
+extern public Integer RefSize = 180
+extern public Integer ResultSize = 100
+extern public Image Templ_Left = Image()
+extern public Point2DArray FeatLoc_Left = Point2DArray{}
+extern public Point2DArray ResultPoints = Point2DArray{}
+extern public Image Templ_Right = Image()
+extern public Point2DArray FeatLoc_Right = Point2DArray{}
+extern public Point2D TemplStripeLoc_Left = Point2D()
+extern public Point2D TemplStripeLoc_Right = Point2D()
+extern public Point2DArray ResultPoints_Left = Point2DArray{}
+extern public Point2DArray ResultPoints_Rigth = Point2DArray{}
+extern public ImageArray SearchTiles_Left = ImageArray{}
+extern public ImageArray SearchTiles_Right = ImageArray{}
+extern public GrayModel StripeModel_SingleCam = GrayModel()
+extern public Integer ProcessIterator = 0
+extern public Integer MergedSamplGenerationInterval = 500
+extern public Image Sampl_Left = Image()
+extern public Image Sampl_Right = Image()
+extern public Image MergedSample = Image()
+extern public Image DisplMap_Left = Image()
+extern public Image DisplMap_Right = Image()
+extern public Real ShearLeft = 0.000000
+extern public Real ShearRight = 0.000000
+extern public Bool SamplLeftReady = False
+extern public Bool SamplRightReady = False
+
+//:SECTIONSVISIBILITY Visible
+//:USETYPE WORKERTASK
+public Main()
+{
+
+section INITIALIZE:
+	CopyObject<File>
+	(
+		inObject: "C:\\Users\\Gabriel Ceballos\\Desktop\\Walstead(D)\\Dataset\\kolor\\480586!480586 SIG-5_X01 F\\T\\template.tif"
+		outObject: con_217f987f_9581_41f0_b37a_29971086de15
+	)
+
+	//:HIDDENPORT[inLoadAlphaChannel] TRUE
+	LoadImage
+	(
+		inFile: con_217f987f_9581_41f0_b37a_29971086de15
+		inLoadAlphaChannel: False
+		outImage: con_7c35ed1e_6f5d_4c5b_a32f_204f23c978a7
+	)
+
+	_X_CropBleeds
+	(
+		inTempl: con_7c35ed1e_6f5d_4c5b_a32f_204f23c978a7
+		outTempl: con_f7db158d_198f_403b_b0c1_647865ccb579
+	)
+
+	_0_Init
+	(
+		inTempl: con_7c35ed1e_6f5d_4c5b_a32f_204f23c978a7
+	)
+
+section ACQUIRE:
+	//:HIDDENPORT[inFileType] TRUE
+	//:HIDDENPORT[inSortingOrder] TRUE
+	//:HIDDENPORT[inRepeat] TRUE
+	//:HIDDENPORT[inProcessSubdirectories] TRUE
+	//:HIDDENPORT[inInvert] TRUE
+	//:HIDDENPORT[inLoadAlphaChannel] TRUE
+	//:HIDDENPORT[inDelay] TRUE
+	//:HIDDENPORT[outIsFirst] TRUE
+	//:HIDDENPORT[outIsLast] TRUE
+	disabled EnumerateImages
+	(
+		inDirectory: "..\\..\\..\\Data\\Kamery chroma\\2022-08-24\\L"
+		inFileType: Nil
+		inSortingOrder: Name
+		inRepeat: False
+		inProcessSubdirectories: False
+		inInvert: False
+		inLoadAlphaChannel: False
+		inDelay: 0
+		outImage: Nil
+		outFilePath: Nil
+		outFileName: Nil
+		outIsFirst: Nil
+		outIsLast: Nil
+	)
+
+	//:HIDDENPORT[inFileType] TRUE
+	//:HIDDENPORT[inSortingOrder] TRUE
+	//:HIDDENPORT[inRepeat] TRUE
+	//:HIDDENPORT[inProcessSubdirectories] TRUE
+	//:HIDDENPORT[inInvert] TRUE
+	//:HIDDENPORT[inLoadAlphaChannel] TRUE
+	//:HIDDENPORT[inDelay] TRUE
+	//:HIDDENPORT[outIsFirst] TRUE
+	//:HIDDENPORT[outIsLast] TRUE
+	disabled EnumerateImages
+	(
+		inDirectory: "..\\..\\..\\Data\\Kamery chroma\\2022-08-24\\R"
+		inFileType: Nil
+		inSortingOrder: Name
+		inRepeat: False
+		inProcessSubdirectories: False
+		inInvert: False
+		inLoadAlphaChannel: False
+		inDelay: 0
+		outImage: Nil
+		outFilePath: Nil
+		outFileName: Nil
+		outIsFirst: Nil
+		outIsLast: Nil
+	)
+
+section PROCESS:
+	//:HIDDENPORT[inFileType] TRUE
+	//:HIDDENPORT[inSortingOrder] TRUE
+	//:HIDDENPORT[inRepeat] TRUE
+	//:HIDDENPORT[inProcessSubdirectories] TRUE
+	//:HIDDENPORT[inInvert] TRUE
+	//:HIDDENPORT[inLoadAlphaChannel] TRUE
+	//:HIDDENPORT[inDelay] TRUE
+	//:HIDDENPORT[outIsFirst] TRUE
+	//:HIDDENPORT[outIsLast] TRUE
+	EnumerateImages
+	(
+		inDirectory: "C:\\Users\\Gabriel Ceballos\\Desktop\\Walstead(D)\\Dataset\\kolor\\480586!480586 SIG-5_X01 F\\L"
+		inFileType: Nil
+		inSortingOrder: Name
+		inRepeat: False
+		inProcessSubdirectories: False
+		inInvert: False
+		inLoadAlphaChannel: False
+		inDelay: 0
+		outImage: con_bb167aad_c430_4a20_b722_bcf6157c0d8f
+		outFilePath: Nil
+		outFileName: Nil
+		outIsFirst: Nil
+		outIsLast: Nil
+	)
+
+	//:HIDDENPORT[inFileType] TRUE
+	//:HIDDENPORT[inSortingOrder] TRUE
+	//:HIDDENPORT[inRepeat] TRUE
+	//:HIDDENPORT[inProcessSubdirectories] TRUE
+	//:HIDDENPORT[inInvert] TRUE
+	//:HIDDENPORT[inLoadAlphaChannel] TRUE
+	//:HIDDENPORT[inDelay] TRUE
+	//:HIDDENPORT[outIsFirst] TRUE
+	//:HIDDENPORT[outIsLast] TRUE
+	EnumerateImages
+	(
+		inDirectory: "C:\\Users\\Gabriel Ceballos\\Desktop\\Walstead(D)\\Dataset\\kolor\\480586!480586 SIG-5_X01 F\\R"
+		inFileType: Nil
+		inSortingOrder: Name
+		inRepeat: False
+		inProcessSubdirectories: False
+		inInvert: False
+		inLoadAlphaChannel: False
+		inDelay: 0
+		outImage: con_905b4a7d_b45b_4dde_97c4_7e4d5799e194
+		outFilePath: Nil
+		outFileName: Nil
+		outIsFirst: Nil
+		outIsLast: Nil
+	)
+
+	//Wykonywane na żądanie
+	_1_Update
+	(
+		inTempl: con_f7db158d_198f_403b_b0c1_647865ccb579
+		inFrameLeft: con_bb167aad_c430_4a20_b722_bcf6157c0d8f
+		inFrameRight: con_905b4a7d_b45b_4dde_97c4_7e4d5799e194
+		outTempl: con_e2f202e4_acba_4f29_a74d_89f18da9d8f6
+	)
+
+	disabled CurrentDateTime
+	(
+		inFormat: "_%y%m%d_%H%M%S"
+		outDateTimeString: con_bce8e363_ed33_4582_b2c0_22e5c788daf7
+		outDateTime: Nil
+	)
+
+	//:EXPLICITTYPE[outDir] true
+	//:EXPLICITTYPE[outFile] true
+	disabled expression
+	{
+		File inTempl
+		String inDate
+		String outDir = "inTempl.Replace(\".tif\",\"\\\\\")"
+		String outFile = "inTempl.Replace(\".tif\",\"\\\\\"+inDate+\".png\")"
+	}
+	(
+		inTempl: con_217f987f_9581_41f0_b37a_29971086de15
+		inDate: con_bce8e363_ed33_4582_b2c0_22e5c788daf7
+		outDir: con_73ff2c94_794e_4840_9c04_c06bf7b41341
+		outFile: con_04ef8ae3_e857_485d_b2c0_67e0b28bba54
+	)
+
+	disabled CreateDirectories
+	(
+		inDirectory: con_73ff2c94_794e_4840_9c04_c06bf7b41341
+		outSuccess: Nil
+	)
+
+	//:HIDDENPORT[inImageFileFormat] TRUE
+	//:HIDDENPORT[inIgnoreErrors] TRUE
+	disabled SaveImage
+	(
+		inImage: con_e2f202e4_acba_4f29_a74d_89f18da9d8f6
+		inImageFileFormat: Nil
+		inFile: con_04ef8ae3_e857_485d_b2c0_67e0b28bba54
+		inIgnoreErrors: False
+	)
+}
+
+public _CropTempl(Image inTemplLab, Point2D inPrescaler = Point2D(X: 1.000000, Y: 1.000000), Integer inMarginUp = 0, Integer inMarginDown, GrayModel inStripeModel, Point2D? outTemplStripeLoc, Image? outTemplLab) step
+	expand inTemplLab.Height
+	expand inPrescaler.X
+	expand inPrescaler.Y
+{
+	disabled __ConvertLabToMono
+	(
+		inImg: inTemplLab
+		outMonoImg: con_f752c115_0b8b_4591_aed4_7552af3a16d0
+	)
+
+	//:BGIMAGE[inScanPath] @input:inImage
+	//:COORDINATESYSTEM[inScanPath] @input:inScanPathAlignment
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	disabled ScanSingleEdge
+	(
+		inImage: con_f752c115_0b8b_4591_aed4_7552af3a16d0
+		inScanPath: Path<color_morph.f42ce6c2.Path.avdata>
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: Bilinear
+				SamplingStep: 5.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: Any
+			)
+		inEdgeSelection: First
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_3fe3306b_ab24_4566_a070_d377ce149d39
+		outEdge.Magnitude: Nil
+	)
+
+	//:BGIMAGE[inScanPath] @input:inImage
+	//:COORDINATESYSTEM[inScanPath] @input:inScanPathAlignment
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	disabled ScanSingleEdge
+	(
+		inImage: con_f752c115_0b8b_4591_aed4_7552af3a16d0
+		inScanPath: Path<color_morph.92c2f609.Path.avdata>
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: Bilinear
+				SamplingStep: 5.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: Any
+			)
+		inEdgeSelection: First
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_79a54b5d_ce74_4789_9b3f_d7e63ee60830
+		outEdge.Magnitude: Nil
+	)
+
+	disabled SubtractReals
+	(
+		inA: con_79a54b5d_ce74_4789_9b3f_d7e63ee60830
+		inB: con_3fe3306b_ab24_4566_a070_d377ce149d39
+		outDifference: con_9e3f674a_543d_4acd_8c64_e9610f7c7645
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	disabled CropImage
+	(
+		inImage: inTemplLab
+		inBorderColor: Pixel()
+		inSelection.X: con_3fe3306b_ab24_4566_a070_d377ce149d39
+		inSelection.Y: 0
+		inSelection.Width: con_9e3f674a_543d_4acd_8c64_e9610f7c7645
+		inSelection.Height: inTemplLab.Height
+		outImage: Nil
+	)
+
+	//:HIDDENPORT[inMirrorDirection] TRUE
+	MirrorImage
+	(
+		inImage: inTemplLab
+		inMirrorDirection: Both
+		outImage: con_8b38b86f_bfbf_41b0_ab22_7c6aa78375a0
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage_Relative
+	(
+		inImage: con_8b38b86f_bfbf_41b0_ab22_7c6aa78375a0
+		inHorizontalScale: inPrescaler.X
+		inVerticalScale: inPrescaler.Y
+		inResizeMethod: Bilinear
+		outImage: con_1e28eb7b_8c4a_4a73_ab7a_ebe9e54b8460
+		outImage.Width: con_d31c0815_a560_42cd_a2ca_d608dd608ba5
+		outImage.Height: con_16df8e7d_66aa_4788_b456_9e31240b3055
+	)
+
+	//:EXPLICITTYPE[outBox] true
+	expression
+	{
+		Integer inWidth
+		Integer inHeight
+		Integer inMarginUp
+		Integer inMarginDown
+		Box outBox = "Box(0,inMarginUp,inWidth,inHeight-inMarginUp-inMarginDown)"
+	}
+	(
+		inWidth: con_d31c0815_a560_42cd_a2ca_d608dd608ba5
+		inHeight: con_16df8e7d_66aa_4788_b456_9e31240b3055
+		inMarginUp: inMarginUp
+		inMarginDown: inMarginDown
+		outBox: con_dccfa182_1ec2_4750_b702_cdf741c00367
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: con_1e28eb7b_8c4a_4a73_ab7a_ebe9e54b8460
+		inSelection: con_dccfa182_1ec2_4750_b702_cdf741c00367
+		inBorderColor:
+			Pixel
+			(
+				X: 255.000000
+				Y: 255.000000
+				Z: 255.000000
+				W: 0.000000
+			)
+		outImage: con_4a71dc0e_8361_4a08_b70e_410f27fdb186
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_4a71dc0e_8361_4a08_b70e_410f27fdb186
+		outMonoImg: con_d9c4cca1_004c_450b_be5c_67cc978412bb
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_d9c4cca1_004c_450b_be5c_67cc978412bb
+		inSearchRegion: Nil
+		inSearchRegionAlignment: Nil
+		inGrayModel: inStripeModel
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.700000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin: con_590a6c4f_3016_40a8_b071_b82300769a35
+		outObject.Alignment: Nil
+		outObject.Score: Nil
+	)
+
+	outTemplStripeLoc = con_590a6c4f_3016_40a8_b071_b82300769a35
+
+	outTemplLab = con_4a71dc0e_8361_4a08_b70e_410f27fdb186
+}
+
+public _FindFeatures(Image inTempl, Point2DArray outFeatureLoc) step
+{
+	//:HIDDENPORT[inSourceRoi] TRUE
+	//:HIDDENPORT[inReferenceMethod] TRUE
+	//:HIDDENPORT[inKernel] TRUE
+	//:HIDDENPORT[inRadiusY] TRUE
+	//:HIDDENPORT[inFuzziness] TRUE
+	ThresholdImage_Dynamic
+	(
+		inImage: inTempl
+		inRoi: Nil
+		inSourceRoi: Nil
+		inReferenceMethod: Middle
+		inKernel: Box
+		inRadiusX: 5
+		inRadiusY: Nil
+		inMinRelativeValue: 25.000000
+		inMaxRelativeValue: Nil
+		inFuzziness: 25.000000
+		outMonoImage: con_518567f0_ea0d_4c63_8643_7b3263a3c8c2
+		diagBaseImage: Nil
+		outMonoImage.Width: con_1ef8f8fa_bc6f_4bd2_a2a2_3603a29434e0
+		outMonoImage.Height: con_a1f0fdb9_3710_48ec_b5e9_61ccb6b2b90f
+	)
+
+	//:EXPLICITTYPE[outRows] true
+	//:EXPLICITTYPE[outCols] true
+	//:EXPLICITTYPE[outRowStep] true
+	//:EXPLICITTYPE[outColStep] true
+	expression
+	{
+		Integer inWidth
+		Integer inHeight
+		Integer outRows = "10 "
+		Integer outCols = "10"
+		Real outRowStep = "inHeight/outRows"
+		Real outColStep = "inWidth/outCols"
+	}
+	(
+		inWidth: con_1ef8f8fa_bc6f_4bd2_a2a2_3603a29434e0
+		inHeight: con_a1f0fdb9_3710_48ec_b5e9_61ccb6b2b90f
+		outRows: con_83b79962_f559_4a24_820c_8f1119c3b6ec
+		outCols: con_aa860e14_3aaf_4fe5_b7a0_61f32d922f12
+		outRowStep: con_c627959d_1e52_4ac4_b1ed_2b186d4f8892
+		outColStep: con_c015a8d2_0c06_4cf7_95fd_e3d8905a48c0
+	)
+
+	//:HIDDENPORT[inAnchor] TRUE
+	CreatePointGrid
+	(
+		inPoint: Point2D()
+		inAnchor: TopLeft
+		inRowCount: con_83b79962_f559_4a24_820c_8f1119c3b6ec
+		inColumnCount: con_aa860e14_3aaf_4fe5_b7a0_61f32d922f12
+		inRowStep: con_c627959d_1e52_4ac4_b1ed_2b186d4f8892
+		inColumnStep: con_c015a8d2_0c06_4cf7_95fd_e3d8905a48c0
+		outPointGrid: Nil
+		outPointGrid.X: con_f08a73d2_e4b4_4650_a6aa_95116057b05c
+		outPointGrid.Y: con_88bfe2aa_ccbd_4f29_a354_a84d5477d766
+	)
+
+	CreateBoxRegion
+	(
+		inFrameWidth: con_1ef8f8fa_bc6f_4bd2_a2a2_3603a29434e0
+		inFrameHeight: con_a1f0fdb9_3710_48ec_b5e9_61ccb6b2b90f
+		inBox.X: con_f08a73d2_e4b4_4650_a6aa_95116057b05c
+		inBox.Y: con_88bfe2aa_ccbd_4f29_a354_a84d5477d766
+		inBox.Width: con_c015a8d2_0c06_4cf7_95fd_e3d8905a48c0
+		inBox.Height: con_c627959d_1e52_4ac4_b1ed_2b186d4f8892
+		outRegion: con_f8e16a58_88db_497a_9489_67b661f2c959
+	)
+
+	//:HIDDENPORT[diagKernelRadiusX] TRUE
+	//:HIDDENPORT[diagKernelRadiusY] TRUE
+	SmoothImage_Gauss
+	(
+		inImage: con_518567f0_ea0d_4c63_8643_7b3263a3c8c2
+		inRoi: Nil
+		inStdDevX: 12.000000
+		inStdDevY: Nil
+		inKernelRelativeSize: 2.000000
+		outImage: con_2e27ccaf_c323_4004_b05c_5603fbf120dd
+		diagKernelRadiusX: Nil
+		diagKernelRadiusY: Nil
+	)
+
+	//:HIDDENPORT[inThresholdParams] TRUE
+	//:HIDDENPORT[inRegionProcessingParams] TRUE
+	//:HIDDENPORT[inBlobSplittingParams] TRUE
+	ExtractBlobs_Intensity
+	(
+		inImage: con_2e27ccaf_c323_4004_b05c_5603fbf120dd
+		inRoi: con_f8e16a58_88db_497a_9489_67b661f2c959
+		inRoiAlignment: Nil
+		inThresholdParams:
+			IntensityThresholdParams
+			(
+				MinIntensity: 60.000000
+				MaxIntensity: Nil
+				Hysteresis: 15.000000
+			)
+		inRegionProcessingParams:
+			RegionProcessingParams
+			(
+				Kernel: Box
+				OpeningRadius: 0
+				ClosingRadius: 25
+			)
+		inBlobSplittingParams:
+			BlobSplittingParams
+			(
+				Connectivity: EightDirections
+				MinArea: 5000
+				MaxArea: Nil
+				RemoveBoundaryBlobs: False
+			)
+		outBlobs: con_e623f8e5_6de4_45cd_9339_2a6c9d4461cf
+		diagBlobAreas: Nil
+		diagBaseRegion: Nil
+		outBlobs.Area: con_090ae53c_36de_466c_9000_44e56b63162f
+	)
+
+	//:HIDDENPORT[inSortingOrder] TRUE
+	//:HIDDENPORT[outValue1] TRUE
+	//:HIDDENPORT[outValue2] TRUE
+	//:HIDDENPORT[outValue3] TRUE
+	//:HIDDENPORT[outValue4] TRUE
+	//:HIDDENPORT[outValue5] TRUE
+	//:HIDDENPORT[outValue6] TRUE
+	//:HIDDENPORT[outValue7] TRUE
+	//:HIDDENPORT[outElement1] TRUE
+	//:HIDDENPORT[outElement2] TRUE
+	//:HIDDENPORT[outElement3] TRUE
+	//:HIDDENPORT[outElement4] TRUE
+	//:HIDDENPORT[outElement5] TRUE
+	//:HIDDENPORT[outElement6] TRUE
+	//:HIDDENPORT[outElement7] TRUE
+	GetSortedElements<Region>
+	(
+		inArray: con_e623f8e5_6de4_45cd_9339_2a6c9d4461cf
+		inValues: con_090ae53c_36de_466c_9000_44e56b63162f
+		inSortingOrder: Ascending
+		outValue0: Nil
+		outValue1: Nil
+		outValue2: Nil
+		outValue3: Nil
+		outValue4: Nil
+		outValue5: Nil
+		outValue6: Nil
+		outValue7: Nil
+		outElement0: con_036decfe_eb68_45f8_a900_aa6c9ee9b669
+		outElement1: Nil
+		outElement2: Nil
+		outElement3: Nil
+		outElement4: Nil
+		outElement5: Nil
+		outElement6: Nil
+		outElement7: Nil
+	)
+
+	RegionMassCenter_OrNil
+	(
+		inRegion: con_036decfe_eb68_45f8_a900_aa6c9ee9b669
+		outMassCenter: con_d22370c9_2849_4ac6_9173_af87663ea316
+		outArea: Nil
+	)
+
+	RemoveNils<Point2D>
+	(
+		inArray: con_d22370c9_2849_4ac6_9173_af87663ea316
+		outArray: con_cb659220_9b2d_4064_8aef_4e4e9d06aa6c
+		outElementExisted: Nil
+	)
+
+	outFeatureLoc = con_cb659220_9b2d_4064_8aef_4e4e9d06aa6c
+}
+
+public _MeasureGlobalScale(Image inRef, Image inSampl, Point2DArray inFeatureLoc, Point2D outScale, Real outShear, Real outTranslationX) step
+	expand inRef.Width
+	expand inRef.Height
+{
+	//:HIDDENPORT[inLocationAnchor] TRUE
+	CreateBox
+	(
+		inLocation: inFeatureLoc
+		inLocationAnchor: MiddleCenter
+		inWidth: 150
+		inHeight: 150
+		outBox: con_9686a97c_e862_40b0_b88f_0c70e48a57ce
+	)
+
+	//:HIDDENPORT[inCircleAlignment] TRUE
+	CreateCircleRegion
+	(
+		inCircleAlignment: Nil
+		inFrameWidth: inRef.Width
+		inFrameHeight: inRef.Height
+		inCircle.Center: inFeatureLoc
+		inCircle.Radius: 50.000000
+		outRegion: con_91939553_1a2e_437b_b89b_9df6aa537400
+		outAlignedCircle: Nil
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inSampl
+		inSelection: con_9686a97c_e862_40b0_b88f_0c70e48a57ce
+		inBorderColor: Pixel()
+		outImage: con_9fb2d381_2cef_442d_bd7d_91d5d3bd1bbc
+	)
+
+	//:HIDDENPORT[inReferenceFrame] TRUE
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inSmoothingStdDev] TRUE
+	//:HIDDENPORT[inEdgeThreshold] TRUE
+	//:HIDDENPORT[inEdgeHysteresis] TRUE
+	//:HIDDENPORT[inMinAngle] TRUE
+	//:HIDDENPORT[inMaxAngle] TRUE
+	//:HIDDENPORT[inAnglePrecision] TRUE
+	//:HIDDENPORT[inMinScale] TRUE
+	//:HIDDENPORT[inMaxScale] TRUE
+	//:HIDDENPORT[inScalePrecision] TRUE
+	//:HIDDENPORT[inEdgeCompleteness] TRUE
+	//:HIDDENPORT[outEdgeModelPoint] TRUE
+	CreateEdgeModel2
+	(
+		inImage: con_9fb2d381_2cef_442d_bd7d_91d5d3bd1bbc
+		inTemplateRegion: Nil
+		inReferenceFrame: Nil
+		inMinPyramidLevel: 0
+		inMaxPyramidLevel: 2
+		inSmoothingStdDev: 0.000000
+		inEdgeThreshold: 35.000000
+		inEdgeHysteresis: 15.000000
+		inMinAngle: 0.000000
+		inMaxAngle: 0.000000
+		inAnglePrecision: 1.000000
+		inMinScale: 1.000000
+		inMaxScale: 1.000000
+		inScalePrecision: 1.000000
+		inEdgeCompleteness: 1.000000
+		outEdgeModel: con_4f2d0e1c_331b_4f8f_81dd_1d7812d6eae7
+		outEdgeModelPoint: Nil
+		outEdges: Nil
+		diagEdgePyramid: Nil
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inEdgeThreshold] TRUE
+	//:HIDDENPORT[inEdgePolarityMode] TRUE
+	//:HIDDENPORT[inEdgeNoiseLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[outObject] FALSE
+	//:HIDDENPORT[outObjectEdges] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_Edges2
+	(
+		inImage: inSampl
+		inSearchRegion: con_91939553_1a2e_437b_b89b_9df6aa537400
+		inSearchRegionAlignment: Nil
+		inEdgeModel: con_4f2d0e1c_331b_4f8f_81dd_1d7812d6eae7
+		inMinPyramidLevel: 2
+		inMaxPyramidLevel: Nil
+		inEdgeThreshold: 10.000000
+		inEdgePolarityMode: MatchStrictly
+		inEdgeNoiseLevel: High
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.400000
+		outObject: Nil
+		outObjectEdges: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagEdgePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: con_e50a98ff_1e50_4e9f_bf86_473e0be08860
+		outObject.Alignment: Nil
+		outObject.Score: Nil
+	)
+
+	RectangleCenter
+	(
+		inRectangle: con_e50a98ff_1e50_4e9f_bf86_473e0be08860
+		outCenterPoint: con_43772f98_fd74_439a_b18a_27dee363be3e
+	)
+
+	//:EXPLICITTYPE[outPoint] true
+	expression
+	{
+		Rectangle2D? inRef
+		Point2D inPoint
+		Point2D? outPoint = "inRef==Nil? Nil : inPoint"
+	}
+	(
+		inRef: con_e50a98ff_1e50_4e9f_bf86_473e0be08860
+		inPoint: inFeatureLoc
+		outPoint: con_ff4123e1_b49a_4a57_a134_a1d747328f49
+	)
+
+	//:HIDDENPORT[outElementExisted] TRUE
+	RemoveNils<Point2D>
+	(
+		inArray: con_ff4123e1_b49a_4a57_a134_a1d747328f49
+		outArray: con_948ba8ee_4cfc_46a1_a156_15a1d068499b
+		outElementExisted: Nil
+	)
+
+	//:HIDDENPORT[outElementExisted] TRUE
+	RemoveNils<Point2D>
+	(
+		inArray: con_43772f98_fd74_439a_b18a_27dee363be3e
+		outArray: con_8f7ca092_54c0_4b11_be8a_44de65498459
+		outElementExisted: Nil
+	)
+
+	CropArraysToEqualSize<Point2D>
+	(
+		inArray1: con_948ba8ee_4cfc_46a1_a156_15a1d068499b
+		inArray2: con_8f7ca092_54c0_4b11_be8a_44de65498459
+		outArray1: con_e647ccc1_a02c_40d8_9160_3a9f9e2c7fed
+		outArray2: con_f129b7cc_27fe_4d5b_8156_852ee61d2251
+	)
+
+	//:HIDDENPORT[inAllowRotation] TRUE
+	//:HIDDENPORT[inAllowScale] TRUE
+	//:HIDDENPORT[inMaxIterationCount] TRUE
+	//:HIDDENPORT[inMatchFraction] TRUE
+	//:HIDDENPORT[inInitialTransformCount] TRUE
+	AdjustPointArrays
+	(
+		inPoints: con_e647ccc1_a02c_40d8_9160_3a9f9e2c7fed
+		inReferencePoints: con_f129b7cc_27fe_4d5b_8156_852ee61d2251
+		inAllowRotation: True
+		inAllowScale: False
+		inMaxIterationCount: 10
+		inMatchFraction: 0.750000
+		inInitialTransformCount: 10
+		outAlignedPoints: Nil
+		outAlignment: Nil
+		outAlignment.Origin.X: con_58f1f36d_b813_46b0_9013_74ef87f3d4b7
+		outAlignment.Origin.Y: Nil
+		outAlignment.Angle: con_398ccebb_7656_408e_87cb_621b188c96ff
+		outAlignment.Scale: con_60f974de_85a1_4c6a_ba25_a24a13ae1de9
+	)
+
+	//:HIDDENPORT[inDefaultObject] TRUE
+	MergeDefault<Real>
+	(
+		inConditionalObject: con_58f1f36d_b813_46b0_9013_74ef87f3d4b7
+		inDefaultObject: 0.000000
+		outObject: con_d4c1a603_17d0_4c70_a9f5_68d5a1998dc7
+	)
+
+	//:HIDDENPORT[inDefaultObject] TRUE
+	MergeDefault<Real>
+	(
+		inConditionalObject: con_398ccebb_7656_408e_87cb_621b188c96ff
+		inDefaultObject: 0.000000
+		outObject: con_11652edc_811a_468c_b90c_6b7db600cc55
+	)
+
+	//:HIDDENPORT[inDefaultObject] TRUE
+	MergeDefault<Real>
+	(
+		inConditionalObject: con_60f974de_85a1_4c6a_ba25_a24a13ae1de9
+		inDefaultObject: 1.000000
+		outObject: con_44ce3f99_3989_43a1_b447_931d0dc6776d
+	)
+
+	Tangent
+	(
+		inAngle: con_11652edc_811a_468c_b90c_6b7db600cc55
+		outTangent: con_b4a891b9_1aff_4b94_8111_28cd60f1f029
+	)
+
+	outScale.X = con_44ce3f99_3989_43a1_b447_931d0dc6776d
+
+	outScale.Y = con_44ce3f99_3989_43a1_b447_931d0dc6776d
+
+	outShear = con_b4a891b9_1aff_4b94_8111_28cd60f1f029
+
+	outTranslationX = con_d4c1a603_17d0_4c70_a9f5_68d5a1998dc7
+}
+
+public _ApplyGlobalScale(Point2D inScale, Real inShear, Real inTranslationX, Image inTempl, Image outTempl) step
+	expand inTempl.Width
+	expand inTempl.Height
+{
+	//:HIDDENPORT[inBorder] TRUE
+	//:HIDDENPORT[inInverse] TRUE
+	TranslateImage
+	(
+		inImage: inTempl
+		inBorder: Pixel()
+		inDeltaX: 0
+		inDeltaY: 0
+		inInverse: False
+		outImage: con_a6b4193f_20c8_43d9_859c_bd15704e96db
+	)
+
+	//:HIDDENPORT[inAxis] TRUE
+	//:HIDDENPORT[inInterpolationMethod] TRUE
+	ShearImage
+	(
+		inImage: con_a6b4193f_20c8_43d9_859c_bd15704e96db
+		inShear: inShear
+		inAxis: Y
+		inInterpolationMethod: Bilinear
+		outImage: con_a5a2dbdc_f4c7_49f9_af8a_e53231e9e2e6
+	)
+
+	//:EXPLICITTYPE[outNewWidth] true
+	//:EXPLICITTYPE[outNewHeight] true
+	expression
+	{
+		Point2D inScale
+		Integer inRefWidth
+		Integer inRefHeight
+		Integer* outNewWidth = "integer(inScale.X * inRefWidth)"
+		Integer* outNewHeight = "integer(inScale.Y * inRefHeight)"
+	}
+	(
+		inScale: inScale
+		inRefWidth: inTempl.Width
+		inRefHeight: inTempl.Height
+		outNewWidth: con_07197e93_e720_4cdf_8457_58f6ea8d3308
+		outNewHeight: con_2a7017e1_47fd_4885_b1ae_f1c6ac8cf2dd
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: con_a5a2dbdc_f4c7_49f9_af8a_e53231e9e2e6
+		inNewWidth: con_07197e93_e720_4cdf_8457_58f6ea8d3308
+		inNewHeight: con_2a7017e1_47fd_4885_b1ae_f1c6ac8cf2dd
+		inResizeMethod: NearestNeighbour
+		outImage: con_0d803c60_2630_4c91_9b6c_f436343bf479
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: con_0d803c60_2630_4c91_9b6c_f436343bf479
+		inBorderColor: Pixel()
+		inSelection.X: 0
+		inSelection.Y: 0
+		inSelection.Width: inTempl.Width
+		inSelection.Height: inTempl.Height
+		outImage: con_84a3c739_2eef_4150_9edf_1d48b85cdcc0
+	)
+
+	outTempl = con_84a3c739_2eef_4150_9edf_1d48b85cdcc0
+}
+
+public _MeasureLocalDispl(Image inRef, Image inSampl, Point2DArray outDisplLoc, Vector2D?Array outDispl) step
+	expand inRef.Width
+	expand inRef.Height
+{
+	//Define reference points based on "ResultSize" on which the cropped tiles will be created.
+	__DefineResultsPoints
+	(
+		inResultSize: ResultSize
+		inSearchSize: SearchSize
+		inImageRefWidth: inRef.Width
+		inImageRefHeight: inRef.Height
+		outResultsPoints: con_bb176400_7830_4fc6_8a26_d5333e1ef701
+	)
+
+	//Crop tiles -> reference tiles to RefSize, search tiles to SearchSize
+	__CropTiles
+	(
+		inPoint: con_bb176400_7830_4fc6_8a26_d5333e1ef701
+		inRefSize: RefSize
+		inSearchSize: SearchSize
+		inImage: inSampl
+		inRefImage: inRef
+		inInterpolation: Bilinear
+		outRefTiles: con_dbc2f065_5c3c_46d8_9b4b_5fbbd1292758
+		outSearchTiles: con_eb4a7b21_802d_4413_b43b_19a6e4b73d58
+	)
+
+	__FindCorrelationDelta
+	(
+		inSearchSize: SearchSize
+		inRefSize: RefSize
+		inSearchTile: con_eb4a7b21_802d_4413_b43b_19a6e4b73d58
+		inRefTile: con_dbc2f065_5c3c_46d8_9b4b_5fbbd1292758
+		outDelta: con_53116638_d204_4489_80dc_7a14edae8366
+		outEdges: Nil
+		outObjectMatch: Nil
+		outObjMatchEdges: Nil
+		outEnhObjMatchEdges: Nil
+	)
+
+	outDisplLoc = con_bb176400_7830_4fc6_8a26_d5333e1ef701
+
+	outDispl = con_53116638_d204_4489_80dc_7a14edae8366
+}
+
+public _CorrectDisplMap(Vector2D?Array inDispl, Point2DArray inDisplLoc, Image inDisplMap, Image outDisplMap) step
+	expand inDisplMap.Width
+	expand inDisplMap.Height
+{
+	//Na podstawie wartości przesunięć, oraz ich lokalizacji genruje nową mapę przesunięć, którą uśrednia z wartośćią zapisaną w pamięci
+
+	parameters read
+	{
+		outputs: Templ_Left
+	}
+	(
+		outTempl_Left: Nil
+		outTempl_Left.Width: con_97449495_3522_4f4c_8941_f44a8963b19e
+		outTempl_Left.Height: con_07302c86_85bd_4fee_8e86_10436c9ed0cf
+	)
+
+	__GenerateDeltaMap
+	(
+		inDelta: inDispl
+		inResultsPoints: inDisplLoc
+		inResultSize: ResultSize
+		inRefWidth: con_97449495_3522_4f4c_8941_f44a8963b19e
+		inRefHeight: con_07302c86_85bd_4fee_8e86_10436c9ed0cf
+		outDeltaMap: con_bba87d11_7c39_467c_951d_c0fc4ab30a35
+		outDeltaMap.Height: con_e9dd3dd6_cad7_49c8_a5c1_b02331ea2b8d
+		outDeltaMap.Width: con_55df80ac_b627_4510_9aef_865b3a10a6b7
+	)
+
+	//:EXPLICITTYPE[outDisplImage] true
+	expression
+	{
+		Image inDisplMap
+		Image? outDisplImage = "if inDisplMap.Height == 0 and inDisplMap.Width == 0 then nil else inDisplMap"
+	}
+	(
+		inDisplMap: inDisplMap
+		outDisplImage: con_839a91b8_92d7_4300_ba9d_fa66907b034f
+	)
+
+	__AvgDisplMap
+	(
+		inDisplMapWidth: inDisplMap.Width
+		inDisplMapHeight: inDisplMap.Height
+		inDeltaMapWidth: con_55df80ac_b627_4510_9aef_865b3a10a6b7
+		inDeltaMapHeight: con_e9dd3dd6_cad7_49c8_a5c1_b02331ea2b8d
+		inImage: con_839a91b8_92d7_4300_ba9d_fa66907b034f
+		inImage2: con_bba87d11_7c39_467c_951d_c0fc4ab30a35
+		outImage: con_c0ecf32c_fe30_4d26_90a4_3e5d3f0aaa71
+	)
+
+	//:EXPLICITTYPE[outImage] true
+	expression
+	{
+		Image inDeltaMap
+		Image? inAvgMap
+		Image inDisplMap
+		Image? outImage = "if inDisplMap.Height == 0 and inDisplMap.Width == 0 then inDeltaMap else inAvgMap"
+	}
+	(
+		inDeltaMap: con_bba87d11_7c39_467c_951d_c0fc4ab30a35
+		inAvgMap: con_c0ecf32c_fe30_4d26_90a4_3e5d3f0aaa71
+		inDisplMap: inDisplMap
+		outImage: con_2956386b_f06c_4208_9181_4c1f8f71319e
+	)
+
+	MergeDefault<Image>
+	(
+		inConditionalObject: con_2956386b_f06c_4208_9181_4c1f8f71319e
+		inDefaultObject: con_bba87d11_7c39_467c_951d_c0fc4ab30a35
+		outObject: con_572a8901_367e_4ebb_946a_70bb88319a0f
+	)
+
+	outDisplMap = con_572a8901_367e_4ebb_946a_70bb88319a0f
+}
+
+public _ApplyDisplMap(Image inDisplMap, Image inTempl, Image outTempl) step
+	expand inTempl.Width
+	expand inTempl.Height
+{
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: inDisplMap
+		inNewWidth: inTempl.Width
+		inNewHeight: Nil
+		inResizeMethod: NearestNeighbour
+		outImage: con_d5dfea73_b391_4be6_9004_074096e379ed
+	)
+
+	//:HIDDENPORT[inImageInterpolation] TRUE
+	TranslatePixels
+	(
+		inImage: inTempl
+		inVectorImage: con_d5dfea73_b391_4be6_9004_074096e379ed
+		inRoi: Nil
+		inImageInterpolation: Bilinear
+		outImage: con_c2651eac_a6f2_4529_ab1f_b82773e86b6f
+	)
+
+	outTempl = con_c2651eac_a6f2_4529_ab1f_b82773e86b6f
+}
+
+public _PrepareStripeModel(GrayModel outStripeModel, GrayModel outStripeModel_single_camera) step
+{
+	//Create QI stripe GrayModel
+	//:BGIMAGE[inTemplateRegion] @input:inImage
+	//:HIDDENPORT[inReferenceFrame] TRUE
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inMinAngle] TRUE
+	//:HIDDENPORT[inMaxAngle] TRUE
+	//:HIDDENPORT[inAnglePrecision] TRUE
+	//:HIDDENPORT[inMinScale] TRUE
+	//:HIDDENPORT[inMaxScale] TRUE
+	//:HIDDENPORT[inScalePrecision] TRUE
+	//:LABELDATASOURCE[outGrayModel] GrayModel
+	//:HIDDENPORT[outGrayModelPoint] TRUE
+	CreateGrayModel
+	(
+		inImage: Image<color_morph.8132876a.Image.avdata>
+		inTemplateRegion: Nil
+		inReferenceFrame: Nil
+		inMinPyramidLevel: 0
+		inMaxPyramidLevel: Nil
+		inMinAngle: 0.000000
+		inMaxAngle: 0.000000
+		inAnglePrecision: 1.000000
+		inMinScale: 1.000000
+		inMaxScale: 1.000000
+		inScalePrecision: 1.000000
+		outGrayModel: con_e665b43c_4a2e_4a93_b574_7fe35044f2ae
+		outGrayModelPoint: Nil
+		diagTemplatePyramid: Nil
+	)
+
+	//Create QI stripe GrayModel
+	//:BGIMAGE[inTemplateRegion] @input:inImage
+	//:HIDDENPORT[inReferenceFrame] TRUE
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inMinAngle] TRUE
+	//:HIDDENPORT[inMaxAngle] TRUE
+	//:HIDDENPORT[inAnglePrecision] TRUE
+	//:HIDDENPORT[inMinScale] TRUE
+	//:HIDDENPORT[inMaxScale] TRUE
+	//:HIDDENPORT[inScalePrecision] TRUE
+	//:HIDDENPORT[outGrayModelPoint] TRUE
+	disabled CreateGrayModel
+	(
+		inImage: Image<color_morph.7985eef4.Image.avdata>
+		inTemplateRegion: Region<color_morph.b7d9d21d.Region.avdata>
+		inReferenceFrame: Nil
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: 4
+		inMinAngle: 0.000000
+		inMaxAngle: 0.000000
+		inAnglePrecision: 0.001000
+		inMinScale: 1.000000
+		inMaxScale: 1.000000
+		inScalePrecision: 0.050000
+		outGrayModel: Nil
+		outGrayModelPoint: Nil
+		diagTemplatePyramid: Nil
+	)
+
+	outStripeModel = con_e665b43c_4a2e_4a93_b574_7fe35044f2ae
+
+	outStripeModel_single_camera = con_e665b43c_4a2e_4a93_b574_7fe35044f2ae
+}
+
+public _1_Update(Image inTempl, Image inFrameLeft, Image inFrameRight, Image outTempl) step
+{
+	parameters write
+	{
+		inputs: SearchSize, RefSize, ResultSize
+	}
+	(
+		inSearchSize: 250
+		inRefSize: 180
+		inResultSize: 100
+	)
+
+	//Przygotowanie nowych wartości korekcji wzorca
+
+	//:LABELDATASOURCE[outTempl_Left] Templ_Left
+	//:LABELDATASOURCE[outFeatLoc_Left] FeatLoc_Left
+	//:LABELDATASOURCE[outFeatLoc_Right] FeatLoc_Right
+	//:LABELDATASOURCE[outTempl_Right] Templ_Right
+	//:LABELDATASOURCE[outShearRight] ShearRight
+	//:LABELDATASOURCE[outShearLeft] ShearLeft
+	parameters read
+	{
+		outputs: Templ_Left, FeatLoc_Left, FeatLoc_Right, Templ_Right, DisplMap_Left, DisplMap_Right, ShearRight, ShearLeft, StripeModel_SingleCam, TemplStripeLoc_Left, TemplStripeLoc_Right, Templ
+	}
+	(
+		outTempl_Left: con_2ecf3974_f063_4d13_ac52_cfebdc66f38b
+		outFeatLoc_Left: con_57c2b230_00fb_492c_8187_ef4cee3dae71
+		outFeatLoc_Right: con_8c49f3c9_6aeb_4e56_a9bf_066b1c789098
+		outTempl_Right: con_8c79a012_60cd_430f_8aeb_4c93fca81613
+		outDisplMap_Left: con_5b0bf53f_6f2c_46f6_b3d8_29661f02ebb9
+		outDisplMap_Right: con_a00bba7a_e3a7_4b8f_b9ad_268212cd23dc
+		outShearRight: con_77ba8dfe_df7e_41eb_a529_4375b7ee6fd5
+		outShearLeft: con_8a4db65b_5c92_46a2_a90e_952a90bc8aa3
+		outStripeModel_SingleCam: con_c6887274_23a3_44e5_b2fe_6c59930f50d4
+		outTemplStripeLoc_Left: con_7a0a6658_dfc9_4a04_a020_09406e4ae265
+		outTemplStripeLoc_Right: con_533fb6c1_5be2_49e5_98cc_aa5da4488d65
+		outTempl: con_08b3bc1e_3486_4630_a520_cd8c5a662917
+	)
+
+	__CropSample_Left
+	(
+		inSampl: inFrameLeft
+		inStripeModel: con_c6887274_23a3_44e5_b2fe_6c59930f50d4
+		inTemplStripeLoc: con_7a0a6658_dfc9_4a04_a020_09406e4ae265
+		inTempl_left: con_2ecf3974_f063_4d13_ac52_cfebdc66f38b
+		outSampl: con_72d2e24a_e097_4d3a_aecd_3b996a18c12d
+	)
+
+	__CropSample_Right
+	(
+		inSampl: inFrameRight
+		inStripeModel: con_c6887274_23a3_44e5_b2fe_6c59930f50d4
+		inTemplStripeLoc: con_533fb6c1_5be2_49e5_98cc_aa5da4488d65
+		inTempl: con_8c79a012_60cd_430f_8aeb_4c93fca81613
+		outSampl: con_ba49c5fc_3b70_4a0a_90ce_0b4c91318d57
+	)
+
+	//:USELABEL[inRef]
+	//:USELABEL[inFeatureLoc]
+	//:USELABEL[inShear]
+	_UpdateOneSide
+	(
+		inRef: con_2ecf3974_f063_4d13_ac52_cfebdc66f38b
+		inSampl: con_72d2e24a_e097_4d3a_aecd_3b996a18c12d
+		inFeatureLoc: con_57c2b230_00fb_492c_8187_ef4cee3dae71
+		inDisplMap: con_5b0bf53f_6f2c_46f6_b3d8_29661f02ebb9
+		inTemplStripeLoc: TemplStripeLoc_Left
+		inShear: con_8a4db65b_5c92_46a2_a90e_952a90bc8aa3
+		outDisplMap: con_b52d14e5_e417_458f_ac9c_ff631263d2c7
+		outTempl: con_2344b13d_c69d_47f2_aa1a_bc37fa0fe014
+		outShear: con_f4691397_fe78_42ee_929c_c0b696e8ce7c
+		outFeatureLoc: con_0cd5d5ce_e03a_4c5a_b299_e8e83101db56
+	)
+
+	//:USELABEL[inRef]
+	//:USELABEL[inFeatureLoc]
+	//:USELABEL[inShear]
+	_UpdateOneSide
+	(
+		inRef: con_8c79a012_60cd_430f_8aeb_4c93fca81613
+		inSampl: con_ba49c5fc_3b70_4a0a_90ce_0b4c91318d57
+		inFeatureLoc: con_8c49f3c9_6aeb_4e56_a9bf_066b1c789098
+		inDisplMap: con_a00bba7a_e3a7_4b8f_b9ad_268212cd23dc
+		inTemplStripeLoc: TemplStripeLoc_Right
+		inShear: con_77ba8dfe_df7e_41eb_a529_4375b7ee6fd5
+		outDisplMap: con_9290a59b_b491_46db_9a23_d26042505a35
+		outTempl: con_dc758bb0_bc73_4daa_9523_edc0aaed9fd2
+		outShear: con_c61da969_433b_49e5_81b7_ecb841f53b91
+		outFeatureLoc: con_a0026a73_bd86_4907_b218_623fa0903bdf
+	)
+
+	parameters write
+	{
+		inputs: DisplMap_Left, DisplMap_Right, Templ_Left, Templ_Right, FeatLoc_Left, FeatLoc_Right
+	}
+	(
+		inDisplMap_Left: con_b52d14e5_e417_458f_ac9c_ff631263d2c7
+		inDisplMap_Right: con_9290a59b_b491_46db_9a23_d26042505a35
+		inTempl_Left: con_2344b13d_c69d_47f2_aa1a_bc37fa0fe014
+		inTempl_Right: con_dc758bb0_bc73_4daa_9523_edc0aaed9fd2
+		inFeatLoc_Left: con_0cd5d5ce_e03a_4c5a_b299_e8e83101db56
+		inFeatLoc_Right: con_a0026a73_bd86_4907_b218_623fa0903bdf
+	)
+
+	parameters write
+	{
+		inputs: SearchSize, RefSize, ResultSize
+	}
+	(
+		inSearchSize: 150
+		inRefSize: 150
+		inResultSize: 50
+	)
+
+	_PrepareLRSearchTiles
+	(
+	)
+
+	//Tu trzeba dodać jeszcze nadpisywanie kafelków 
+
+	parameters write
+	{
+		inputs: ShearLeft, ShearRight
+	}
+	(
+		inShearLeft: con_f4691397_fe78_42ee_929c_c0b696e8ce7c
+		inShearRight: con_c61da969_433b_49e5_81b7_ecb841f53b91
+	)
+
+	//:HIDDENPORT[inImage3] TRUE
+	//:HIDDENPORT[inImage4] TRUE
+	//:HIDDENPORT[inDirection] TRUE
+	JoinImages
+	(
+		inImage1: con_2344b13d_c69d_47f2_aa1a_bc37fa0fe014
+		inImage2: con_dc758bb0_bc73_4daa_9523_edc0aaed9fd2
+		inImage3: Nil
+		inImage4: Nil
+		inDirection: Horizontal
+		inMargin: 0
+		outImage: con_162838ca_1c74_4820_b03f_0ff945dfa8d4
+	)
+
+	MergeDefault<Image>
+	(
+		inConditionalObject: con_162838ca_1c74_4820_b03f_0ff945dfa8d4
+		inDefaultObject: con_08b3bc1e_3486_4630_a520_cd8c5a662917
+		outObject: con_df5e918f_fd60_4477_9d28_8baf53101ac0
+	)
+
+	//:HIDDENPORT[inMirrorDirection] TRUE
+	MirrorImage
+	(
+		inImage: con_df5e918f_fd60_4477_9d28_8baf53101ac0
+		inMirrorDirection: Both
+		outImage: con_9d305530_42c0_4a28_bdcd_7eed69ddd9dc
+	)
+
+	outTempl = con_9d305530_42c0_4a28_bdcd_7eed69ddd9dc
+}
+
+public __DefineResultsPoints(Integer inResultSize, Integer inSearchSize, Integer inImageRefWidth, Integer inImageRefHeight, Point2DArray outResultsPoints) step
+{
+	//:EXPLICITTYPE[outOrigin] true
+	//:EXPLICITTYPE[outRows] true
+	//:EXPLICITTYPE[outColumns] true
+	//:EXPLICITTYPE[outBox] true
+	expression
+	{
+		Integer inResultSize
+		Integer inImageRefWidth
+		Integer inImageRefHeight
+		Integer inSearchSize
+		Point2D outOrigin = "Point2D(inResultSize/2, inResultSize/2)"
+		Integer outRows = "integer(inImageRefHeight/inResultSize)+1"
+		Integer outColumns = "integer(inImageRefWidth/inResultSize)+1"
+		Box outBox = "Box(0,0,inImageRefWidth, inImageRefHeight)"
+	}
+	(
+		inResultSize: inResultSize
+		inImageRefWidth: inImageRefWidth
+		inImageRefHeight: inImageRefHeight
+		inSearchSize: inSearchSize
+		outOrigin: con_b80f7a71_4743_41c5_b453_7d77af11d3f2
+		outRows: con_69d4def7_1dee_4fcc_b84e_38870b38cd22
+		outColumns: con_676a22f8_85b7_4d1d_9820_0ebbb430d944
+		outBox: con_b3818e0d_2b8d_4af4_8979_730c37148710
+	)
+
+	//:HIDDENPORT[inAnchor] TRUE
+	CreatePointGrid
+	(
+		inPoint: con_b80f7a71_4743_41c5_b453_7d77af11d3f2
+		inAnchor: TopLeft
+		inRowCount: con_69d4def7_1dee_4fcc_b84e_38870b38cd22
+		inColumnCount: con_676a22f8_85b7_4d1d_9820_0ebbb430d944
+		inRowStep: inResultSize
+		inColumnStep: inResultSize
+		outPointGrid: con_f37c7f0c_cf71_4477_92f0_66bb9f9c27f7
+	)
+
+	TrimPointArray
+	(
+		inPoints: con_f37c7f0c_cf71_4477_92f0_66bb9f9c27f7
+		inBox: con_b3818e0d_2b8d_4af4_8979_730c37148710
+		outPoints: con_d019938b_2203_4307_8e4b_654952c9653c
+	)
+
+	outResultsPoints = con_d019938b_2203_4307_8e4b_654952c9653c
+}
+
+public __CropTiles(Point2D inPoint, Integer inRefSize, Integer inSearchSize, Image inImage, Image inRefImage, InterpolationMethod inInterpolation, Image outRefTiles, Image outSearchTiles) step
+{
+	//:HIDDENPORT[inPointAnchor] TRUE
+	CreateRectangle
+	(
+		inPoint: inPoint
+		inPointAnchor: MiddleCenter
+		inAngle: 0.000000
+		inWidth: inRefSize
+		inHeight: inRefSize
+		outRectangle: con_7bd5c3e5_3602_457d_847e_dce1bd0656d4
+	)
+
+	//:HIDDENPORT[inPointAnchor] TRUE
+	CreateRectangle
+	(
+		inPoint: inPoint
+		inPointAnchor: MiddleCenter
+		inAngle: 0.000000
+		inWidth: inSearchSize
+		inHeight: inSearchSize
+		outRectangle: con_42a23cb8_d93b_4f23_9e7f_dc8cdf2f62e8
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImageToRectangle
+	(
+		inImage: inImage
+		inRectangle: con_7bd5c3e5_3602_457d_847e_dce1bd0656d4
+		inRectangleAlignment: Nil
+		inScaleMode: InputScale
+		inInterpolationMethod: inInterpolation
+		inMargin: 0.000000
+		inBorderColor: Pixel()
+		outImage: con_d8e9c430_ea8b_4d3e_af97_be5f6a6923e7
+		outAlignedRectangle: Nil
+		outOutputAlignment: Nil
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImageToRectangle
+	(
+		inImage: inRefImage
+		inRectangle: con_42a23cb8_d93b_4f23_9e7f_dc8cdf2f62e8
+		inRectangleAlignment: Nil
+		inScaleMode: InputScale
+		inInterpolationMethod: inInterpolation
+		inMargin: 0.000000
+		inBorderColor: Pixel()
+		outImage: con_ff6eb861_8d8a_4a35_a0d1_948ac79229b0
+		outAlignedRectangle: Nil
+		outOutputAlignment: Nil
+	)
+
+	outRefTiles = con_d8e9c430_ea8b_4d3e_af97_be5f6a6923e7
+
+	outSearchTiles = con_ff6eb861_8d8a_4a35_a0d1_948ac79229b0
+}
+
+public __GenerateDeltaMap(Vector2D?Array inDelta, Point2DArray inResultsPoints, Integer inResultSize, Integer inRefWidth, Integer inRefHeight, Image outDeltaMap) step
+{
+	//:EXPLICITTYPE[outInv] true
+	//:EXPLICITTYPE[outW] true
+	//:EXPLICITTYPE[outH] true
+	expression
+	{
+		Integer inResultSize
+		Integer inRefWidth
+		Integer inRefHeight
+		Real outInv = "1/inResultSize"
+		Real outW = "inRefWidth/inResultSize"
+		Real outH = "inRefHeight/inResultSize"
+	}
+	(
+		inResultSize: inResultSize
+		inRefWidth: inRefWidth
+		inRefHeight: inRefHeight
+		outInv: con_4c1e6598_af91_423c_9e18_eb140a9bc5ef
+		outW: con_696b986e_d5c1_4ee4_9016_5786e5d4d0ee
+		outH: con_6ba6944f_cf26_4e07_853c_65b6dc490a10
+	)
+
+	//:BGIMAGE[inReferencePoint] No image
+	//:COORDINATESYSTEM[inReferencePoint] Absolute
+	//:HIDDENPORT[inReferencePoint] TRUE
+	//:HIDDENPORT[inInverse] TRUE
+	RescalePointArray
+	(
+		inPoints: inResultsPoints
+		inReferencePoint: Point2D()
+		inScale: con_4c1e6598_af91_423c_9e18_eb140a9bc5ef
+		inInverse: False
+		outPoints: con_0c081dfd_948e_480c_96c2_3923afee659d
+	)
+
+	PointsBoundingBox_OrNil
+	(
+		inPoints: con_0c081dfd_948e_480c_96c2_3923afee659d
+		outBoundingBox: Nil
+		outBoundingBox.Width: con_1204616c_ad65_4e6d_8651_8acb19ccae75
+		outBoundingBox.Height: con_19a0dfa6_15d5_4a69_a98a_cca840a3e365
+	)
+
+	MergeDefault<Integer>
+	(
+		inConditionalObject: con_1204616c_ad65_4e6d_8651_8acb19ccae75
+		inDefaultObject: con_696b986e_d5c1_4ee4_9016_5786e5d4d0ee
+		outObject: con_4949a25e_e50a_4ed1_a30a_772c6a08ee67
+	)
+
+	MergeDefault<Integer>
+	(
+		inConditionalObject: con_19a0dfa6_15d5_4a69_a98a_cca840a3e365
+		inDefaultObject: con_6ba6944f_cf26_4e07_853c_65b6dc490a10
+		outObject: con_5c08fd9f_2752_4bae_9adc_a0afffdc1b63
+	)
+
+	MergeDefault<Vector2D>
+	(
+		inConditionalObject: inDelta
+		inDefaultObject:
+			Vector2D
+			(
+				DeltaX: -255.000000
+				DeltaY: -255.000000
+			)
+		outObject: Nil
+		outObject.DeltaX: con_a227159b_ab9c_4995_b3fb_4269a1df1d6e
+		outObject.DeltaY: con_a276c960_5a9f_45ad_a3e0_012f13028b1c
+	)
+
+	MakePixel
+	(
+		inX: con_a227159b_ab9c_4995_b3fb_4269a1df1d6e
+		inY: con_a276c960_5a9f_45ad_a3e0_012f13028b1c
+		inZ: 0.000000
+		inW: 0.000000
+		outPixel: con_e78a25ed_6451_4298_a04b_7845234aa912
+	)
+
+	//:HIDDENPORT[inColor] TRUE
+	//:HIDDENPORT[inChannels] TRUE
+	//:HIDDENPORT[inPixelType] TRUE
+	EmptyImage
+	(
+		inWidth: con_4949a25e_e50a_4ed1_a30a_772c6a08ee67
+		inHeight: con_5c08fd9f_2752_4bae_9adc_a0afffdc1b63
+		inColor:
+			Pixel
+			(
+				X: -255.000000
+				Y: -255.000000
+				Z: 0.000000
+				W: 0.000000
+			)
+		inChannels: 2
+		inPixelType: Real
+		outImage: con_54618c67_524c_4611_82be_ca1ba169f53c
+	)
+
+	//:ARRAYSCONSISTENT[inLocations] TRUE
+	SetMultipleImagePixels
+	(
+		inImage: con_54618c67_524c_4611_82be_ca1ba169f53c
+		inLocations: con_0c081dfd_948e_480c_96c2_3923afee659d
+		inPixels: con_e78a25ed_6451_4298_a04b_7845234aa912
+		outImage: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+	)
+
+	//:HIDDENPORT[inA] TRUE
+	//:HIDDENPORT[inB] TRUE
+	diagnostic RescalePixels
+	(
+		inImage: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inRoi: Nil
+		inA: 4.500000
+		inB: 125.000000
+		outImage: con_1e82367c_8f18_4f64_a211_365e2054b2b3
+	)
+
+	diagnostic SplitChannels
+	(
+		inImage: con_1e82367c_8f18_4f64_a211_365e2054b2b3
+		outMonoImage1: Nil
+		outMonoImage2: Nil
+		outMonoImage3: Nil
+		outMonoImage4: Nil
+	)
+
+	//:HIDDENPORT[inHysteresis] TRUE
+	ThresholdToRegion
+	(
+		inImage: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inRoi: Nil
+		inMinValue: -254.000000
+		inMaxValue: Nil
+		inHysteresis: 0.000000
+		outRegion: con_6b571889_6983_42d3_b0f6_9306111915cd
+	)
+
+	ExpaintImage_Bornemann
+	(
+		inImage: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inRegionToExpaint: con_6b571889_6983_42d3_b0f6_9306111915cd
+		inExpaintingRadius: 20
+		inRange: 25
+		inPreSmoothing: 2.000000
+		inPostSmoothing: 0.000000
+		inSharpness: 3.000000
+		inLuminanceMode: YUV
+		outImage: con_0a20ccf5_9f8e_44ff_8d5b_365307309b8d
+	)
+
+	//:HIDDENPORT[inStdDevX] TRUE
+	//:HIDDENPORT[inStdDevY] TRUE
+	//:HIDDENPORT[inKernelRelativeSize] TRUE
+	//:HIDDENPORT[diagKernelRadiusX] TRUE
+	//:HIDDENPORT[diagKernelRadiusY] TRUE
+	SmoothImage_Gauss
+	(
+		inImage: con_0a20ccf5_9f8e_44ff_8d5b_365307309b8d
+		inRoi: Nil
+		inStdDevX: 15.000000
+		inStdDevY: Nil
+		inKernelRelativeSize: 1.000000
+		outImage: con_175b626f_7343_482b_804a_21269c7c3966
+		diagKernelRadiusX: Nil
+		diagKernelRadiusY: Nil
+	)
+
+	DifferenceImage
+	(
+		inImage1: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inImage2: con_175b626f_7343_482b_804a_21269c7c3966
+		inRoi: con_6b571889_6983_42d3_b0f6_9306111915cd
+		outImage: con_bd7d2404_a715_4266_a5d1_b787334bf3af
+	)
+
+	AddChannels
+	(
+		inImage: con_bd7d2404_a715_4266_a5d1_b787334bf3af
+		inRoi: Nil
+		outImage: con_06d86bed_7827_478b_a876_e50d999aeeea
+	)
+
+	//:HIDDENPORT[inHysteresis] TRUE
+	ThresholdToRegion
+	(
+		inImage: con_06d86bed_7827_478b_a876_e50d999aeeea
+		inRoi: Nil
+		inMinValue: 40.000000
+		inMaxValue: Nil
+		inHysteresis: 0.000000
+		outRegion: con_dc6b77ac_ea99_4271_816d_3775c87b5974
+	)
+
+	RegionDifference
+	(
+		inRegion1: con_6b571889_6983_42d3_b0f6_9306111915cd
+		inRegion2: con_dc6b77ac_ea99_4271_816d_3775c87b5974
+		outRegion: con_1054522f_f296_4c55_9dad_d7953405e459
+	)
+
+	ExpaintImage_Bornemann
+	(
+		inImage: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inRegionToExpaint: con_1054522f_f296_4c55_9dad_d7953405e459
+		inExpaintingRadius: 10
+		inRange: 10
+		inPreSmoothing: 2.000000
+		inPostSmoothing: 3.000000
+		inSharpness: 35.000000
+		inLuminanceMode: YUV
+		outImage: con_d47f61f0_5d7f_4ef0_95eb_3e74d65248ca
+	)
+
+	ComposeImages
+	(
+		inImage1: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inImage2: con_d47f61f0_5d7f_4ef0_95eb_3e74d65248ca
+		inRegion: con_1054522f_f296_4c55_9dad_d7953405e459
+		inRoi: Nil
+		outImage: con_f05aaadd_3657_48f1_962d_03f9ea93cbe6
+	)
+
+	//:HIDDENPORT[inStdDevY] TRUE
+	//:HIDDENPORT[inKernelRelativeSize] TRUE
+	//:HIDDENPORT[diagKernelRadiusX] TRUE
+	//:HIDDENPORT[diagKernelRadiusY] TRUE
+	SmoothImage_Gauss
+	(
+		inImage: con_f05aaadd_3657_48f1_962d_03f9ea93cbe6
+		inRoi: Nil
+		inStdDevX: 2.000000
+		inStdDevY: Nil
+		inKernelRelativeSize: 2.000000
+		outImage: con_ca12e05d_8160_4b63_9878_59c31dee2098
+		diagKernelRadiusX: Nil
+		diagKernelRadiusY: Nil
+	)
+
+	//:HIDDENPORT[inA] TRUE
+	//:HIDDENPORT[inB] TRUE
+	diagnostic RescalePixels
+	(
+		inImage: con_ca12e05d_8160_4b63_9878_59c31dee2098
+		inRoi: Nil
+		inA: 4.500000
+		inB: 125.000000
+		outImage: con_ea1e3950_6af5_4bce_be2a_93975a341d47
+	)
+
+	diagnostic SplitChannels
+	(
+		inImage: con_ea1e3950_6af5_4bce_be2a_93975a341d47
+		outMonoImage1: Nil
+		outMonoImage2: Nil
+		outMonoImage3: Nil
+		outMonoImage4: Nil
+	)
+
+	//:HIDDENPORT[inLength] TRUE
+	//:HIDDENPORT[inStep] TRUE
+	//:HIDDENPORT[inSeed] TRUE
+	disabled diagnostic CreateRandomPointArray
+	(
+		inLength: 10
+		inBox:
+			Box
+			(
+				X: 0
+				Y: 0
+				Width: 95
+				Height: 83
+			)
+		inStep: 1.000000
+		inSeed: Nil
+		outArray: con_6ef17c72_43ec_4443_b3ce_2ed874980b0a
+	)
+
+	disabled diagnostic GetImagePixel
+	(
+		inImage: con_a9054806_ebcf_4b17_a1a3_f87131ed85d7
+		inLocation: con_6ef17c72_43ec_4443_b3ce_2ed874980b0a
+		outPixel: Nil
+		outValue: Nil
+		outPixel.X: Nil
+		outPixel.Y: Nil
+	)
+
+	disabled diagnostic GetImagePixel
+	(
+		inImage: con_f05aaadd_3657_48f1_962d_03f9ea93cbe6
+		inLocation: con_6ef17c72_43ec_4443_b3ce_2ed874980b0a
+		outPixel: Nil
+		outValue: Nil
+		outPixel.X: con_b6ec48fc_e033_478a_a2e3_8b9a361aea9b
+		outPixel.Y: con_dd40634a_9f4f_440c_8779_1d7c090dbb09
+	)
+
+	disabled diagnostic GetImagePixel
+	(
+		inImage: con_ca12e05d_8160_4b63_9878_59c31dee2098
+		inLocation: con_6ef17c72_43ec_4443_b3ce_2ed874980b0a
+		outPixel: Nil
+		outValue: Nil
+		outPixel.X: con_44eb4221_0cc1_483c_88c1_8bd921b158fe
+		outPixel.Y: con_8a3ee144_ff91_41c9_8bee_2b3cf1a21882
+	)
+
+	disabled diagnostic SubtractReals
+	(
+		inA: con_b6ec48fc_e033_478a_a2e3_8b9a361aea9b
+		inB: con_44eb4221_0cc1_483c_88c1_8bd921b158fe
+		outDifference: Nil
+	)
+
+	disabled diagnostic SubtractReals
+	(
+		inA: con_dd40634a_9f4f_440c_8779_1d7c090dbb09
+		inB: con_8a3ee144_ff91_41c9_8bee_2b3cf1a21882
+		outDifference: Nil
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: con_ca12e05d_8160_4b63_9878_59c31dee2098
+		inNewWidth: inRefWidth
+		inNewHeight: inRefHeight
+		inResizeMethod: Bilinear
+		outImage: con_9648044e_5b01_40bb_9d61_27045f4194ee
+	)
+
+	outDeltaMap = con_9648044e_5b01_40bb_9d61_27045f4194ee
+}
+
+public __FindCorrelationDelta(Integer inSearchSize, Integer inRefSize, Image inSearchTile, Image inRefTile, Vector2D? outDelta, PathArray? outEdges, Rectangle2D? outObjectMatch, PathArray? outObjMatchEdges, PathArray? outEnhObjMatchEdges) step
+	expand inSearchTile.Width
+{
+	DivideReals
+	(
+		inA: inSearchSize
+		inB: 2.000000
+		outQuotient: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+	)
+
+	//:HIDDENPORT[inPointAnchor] TRUE
+	CreateRectangle
+	(
+		inPointAnchor: MiddleCenter
+		inAngle: 0.000000
+		inWidth: inRefSize
+		inHeight: inRefSize
+		inPoint.X: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+		inPoint.Y: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+		outRectangle: Nil
+	)
+
+	//:HIDDENPORT[inPointAnchor] TRUE
+	CreateRectangle
+	(
+		inPoint: Point2D()
+		inPointAnchor: TopLeft
+		inAngle: 0.000000
+		inWidth: inRefSize
+		inHeight: inRefSize
+		outRectangle: con_4b4ca902_a925_4300_a29f_97a1cae3b9c0
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inSmoothingStdDev] TRUE
+	//:HIDDENPORT[inEdgeThreshold] TRUE
+	//:HIDDENPORT[inEdgeHysteresis] TRUE
+	//:HIDDENPORT[inMinAngle] TRUE
+	//:HIDDENPORT[inMaxAngle] TRUE
+	//:HIDDENPORT[inAnglePrecision] TRUE
+	//:HIDDENPORT[inMinScale] TRUE
+	//:HIDDENPORT[inMaxScale] TRUE
+	//:HIDDENPORT[inScalePrecision] TRUE
+	//:HIDDENPORT[inEdgeCompleteness] TRUE
+	//:HIDDENPORT[outEdgeModelPoint] TRUE
+	CreateEdgeModel2
+	(
+		inImage: inRefTile
+		inTemplateRegion: Nil
+		inReferenceFrame: con_4b4ca902_a925_4300_a29f_97a1cae3b9c0
+		inMinPyramidLevel: 0
+		inMaxPyramidLevel: 2
+		inSmoothingStdDev: 0.200000
+		inEdgeThreshold: 40.000000
+		inEdgeHysteresis: 15.000000
+		inMinAngle: 0.000000
+		inMaxAngle: 0.000000
+		inAnglePrecision: 1.000000
+		inMinScale: 1.000000
+		inMaxScale: 1.000000
+		inScalePrecision: 1.000000
+		inEdgeCompleteness: 1.000000
+		outEdgeModel: con_e094895b_65f9_4868_b514_abc1796e0903
+		outEdgeModelPoint: Nil
+		outEdges: con_d8905558_2876_446f_b56f_7add70d40c58
+		diagEdgePyramid: Nil
+		outEdges.Count: Nil
+	)
+
+	PathArrayPoints
+	(
+		inPaths: con_d8905558_2876_446f_b56f_7add70d40c58
+		outPoints: con_1c5389df_7372_45f5_a91f_8c42ec61b6b9
+		outPoints.Count: Nil
+	)
+
+	PointsBoundingBox_OrNil
+	(
+		inPoints: con_1c5389df_7372_45f5_a91f_8c42ec61b6b9
+		outBoundingBox: Nil
+		outBoundingBox.Width: con_dacbf1d7_ff02_4132_8ab9_0b2cbc246856
+		outBoundingBox.Height: con_37726eea_ed5f_469e_aac0_d35db35c4773
+	)
+
+	//:EXPLICITTYPE[outEM] true
+	expression
+	{
+		EdgeModel2? inEM
+		Integer? inBoxW
+		Integer? inBoxH
+		EdgeModel2? outEM = "if inBoxW < 5 or inBoxH <5 then Nil else inEM "
+	}
+	(
+		inEM: con_e094895b_65f9_4868_b514_abc1796e0903
+		inBoxW: con_dacbf1d7_ff02_4132_8ab9_0b2cbc246856
+		inBoxH: con_37726eea_ed5f_469e_aac0_d35db35c4773
+		outEM: con_7be4219d_bd04_4e4c_8cdd_e09bd63a22a3
+	)
+
+	//:HIDDENPORT[inPointAnchor] TRUE
+	CreateRectangle
+	(
+		inPointAnchor: MiddleCenter
+		inAngle: 0.000000
+		inWidth: 150.000000
+		inHeight: 150.000000
+		inPoint.X: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+		inPoint.Y: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+		outRectangle: con_39a345d7_00b8_4cca_8a1e_3c018e778d47
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inEdgeThreshold] TRUE
+	//:HIDDENPORT[inEdgePolarityMode] TRUE
+	//:HIDDENPORT[inEdgeNoiseLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[outObject] FALSE
+	//:HIDDENPORT[outObjectEdges] FALSE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_Edges2
+	(
+		inImage: inSearchTile
+		inSearchRegion: con_39a345d7_00b8_4cca_8a1e_3c018e778d47
+		inSearchRegionAlignment: Nil
+		inEdgeModel: con_7be4219d_bd04_4e4c_8cdd_e09bd63a22a3
+		inMinPyramidLevel: 0
+		inMaxPyramidLevel: 2
+		inEdgeThreshold: 20.000000
+		inEdgePolarityMode: MatchStrictly
+		inEdgeNoiseLevel: High
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.500000
+		outObject: con_fc2337e4_64ff_455b_b42f_89f9a6b1d444
+		outObjectEdges: con_84597ddd_2e36_492f_a267_d2d5d50ca912
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagEdgePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: con_d4c2efe0_336b_4f49_b4bf_02a061ecaf23
+		outObject.Alignment: Nil
+		outObject.Point: Nil
+		outObject.Score: Nil
+	)
+
+	//:HIDDENPORT[inAllowScale] TRUE
+	EnhanceSingleObjectMatch
+	(
+		inImage: inSearchTile
+		inObject: con_fc2337e4_64ff_455b_b42f_89f9a6b1d444
+		inObjectEdges: con_84597ddd_2e36_492f_a267_d2d5d50ca912
+		inAllowScale: False
+		outObject: Nil
+		outObjectEdges: con_01025f04_37ec_4ead_a010_add7db1bb33a
+	)
+
+	RectangleCenter
+	(
+		inRectangle: con_d4c2efe0_336b_4f49_b4bf_02a061ecaf23
+		outCenterPoint: Nil
+		outCenterPoint.X: con_7843507e_e3a4_44ce_9c2c_1451814fe2e3
+		outCenterPoint.Y: con_91951921_f70e_4d99_a908_ce450faa32dd
+	)
+
+	SubtractReals
+	(
+		inA: con_7843507e_e3a4_44ce_9c2c_1451814fe2e3
+		inB: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+		outDifference: con_2435a8ef_5a85_4e5e_8df1_e950208deb76
+	)
+
+	SubtractReals
+	(
+		inA: con_91951921_f70e_4d99_a908_ce450faa32dd
+		inB: con_a8fb507b_3cd9_48da_8290_fe55be0adae8
+		outDifference: con_99f87265_fc02_44c1_8a4a_f5a26f5699bc
+	)
+
+	outDelta.DeltaX = con_2435a8ef_5a85_4e5e_8df1_e950208deb76
+
+	outDelta.DeltaY = con_99f87265_fc02_44c1_8a4a_f5a26f5699bc
+
+	outEdges = con_d8905558_2876_446f_b56f_7add70d40c58
+
+	outObjectMatch = con_d4c2efe0_336b_4f49_b4bf_02a061ecaf23
+
+	outObjMatchEdges = con_84597ddd_2e36_492f_a267_d2d5d50ca912
+
+	outEnhObjMatchEdges = con_01025f04_37ec_4ead_a010_add7db1bb33a
+}
+
+public __CropSearchTiles(Point2D inPoint, Integer inSearchSize, Image inRefImage, InterpolationMethod inInterpolation, Image outSearchTiles) step
+{
+	//:HIDDENPORT[inPointAnchor] TRUE
+	CreateRectangle
+	(
+		inPoint: inPoint
+		inPointAnchor: MiddleCenter
+		inAngle: 0.000000
+		inWidth: inSearchSize
+		inHeight: inSearchSize
+		outRectangle: con_42a23cb8_d93b_4f23_9e7f_dc8cdf2f62e8
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImageToRectangle
+	(
+		inImage: inRefImage
+		inRectangle: con_42a23cb8_d93b_4f23_9e7f_dc8cdf2f62e8
+		inRectangleAlignment: Nil
+		inScaleMode: InputScale
+		inInterpolationMethod: inInterpolation
+		inMargin: 0.000000
+		inBorderColor: Pixel()
+		outImage: con_ff6eb861_8d8a_4a35_a0d1_948ac79229b0
+		outAlignedRectangle: Nil
+		outOutputAlignment: Nil
+	)
+
+	outSearchTiles = con_ff6eb861_8d8a_4a35_a0d1_948ac79229b0
+}
+
+public __AvgDisplMap(Integer inDisplMapWidth, Integer inDisplMapHeight, Integer inDeltaMapWidth, Integer inDeltaMapHeight, Image inImage, Image inImage2, Image outImage) step
+{
+	//:LABELDATASOURCE[outWidth] Width
+	//:EXPLICITTYPE[outWidth] true
+	//:LABELDATASOURCE[outHeight] Height
+	//:EXPLICITTYPE[outHeight] true
+	expression
+	{
+		Integer inDisplMapWidth
+		Integer inDisplMapHeight
+		Integer inDeltaMapWidth
+		Integer inDeltaMapHeight
+		Integer outWidth as Width = "if inDeltaMapWidth > inDisplMapWidth then inDeltaMapWidth else inDisplMapWidth"
+		Integer outHeight as Height = "if inDeltaMapHeight > inDisplMapHeight then inDeltaMapHeight else inDisplMapHeight"
+	}
+	(
+		inDisplMapWidth: inDisplMapWidth
+		inDisplMapHeight: inDisplMapHeight
+		inDeltaMapWidth: inDeltaMapWidth
+		inDeltaMapHeight: inDeltaMapHeight
+		outWidth: con_472b18af_f995_4471_916f_70bb1266aab2
+		outHeight: con_88ef827f_2657_400d_a23d_fef37cd40d03
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: inImage
+		inNewWidth: con_472b18af_f995_4471_916f_70bb1266aab2
+		inNewHeight: con_88ef827f_2657_400d_a23d_fef37cd40d03
+		inResizeMethod: NearestNeighbour
+		outImage: con_a4423b67_a6c3_4e47_a3a5_fe351b498bf3
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: inImage2
+		inNewWidth: con_472b18af_f995_4471_916f_70bb1266aab2
+		inNewHeight: Nil
+		inResizeMethod: NearestNeighbour
+		outImage: con_cb88bd72_e6a8_49de_856e_30a671172dc8
+	)
+
+	AverageImages
+	(
+		inImage1: con_a4423b67_a6c3_4e47_a3a5_fe351b498bf3
+		inImage2: con_cb88bd72_e6a8_49de_856e_30a671172dc8
+		inRoi: Nil
+		outImage: con_b36760af_a033_4028_8596_895bd16676ff
+	)
+
+	outImage = con_b36760af_a033_4028_8596_895bd16676ff
+}
+
+public _PrepareLRTemplates(Image? outTempl_Left, Image? outTempl_Right) step
+{
+	parameters read
+	{
+		outputs: Templ
+	}
+	(
+		outTempl: con_974e9f3a_03d7_4a20_8621_a48f022a886a
+		outTempl.Width: con_20a6d1e9_6ae9_4c2a_8d78_b73d1b3c110a
+		outTempl.Height: con_f5867482_bd42_42f5_8962_d373b62bcbe4
+	)
+
+	//test    
+
+	parameters read
+	{
+		outputs: TemplStripeLoc
+	}
+	(
+		outTemplStripeLoc: Nil
+		outTemplStripeLoc.X: con_4eca4af7_b08c_49ae_aa23_f6c9fe8d1ac9
+		outTemplStripeLoc.X.Statistics: Nil
+		outTemplStripeLoc.Y: con_dd3e646b_d116_4732_a959_4220e61af030
+	)
+
+	//Wyzcznenie ścieżki, wedłóg której ma być analizowany pasek w celu wykrycia punkut, który zostanie opisany jako punkt podziału. Zabieg stosowany w celu uniknięcia "dzielenia na sztywno" w poł obrazka. Pewnie docolowo linia podziału będzie znajdować się mniej więcej w połowie obrazu
+	//:LABELDATASOURCE[outScanPointPath] ScanPointPath
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inTemplStripeLocX
+		Integer inTemplStripeLocY
+		Integer inTemplHeight
+		Integer inTemplWidth
+		Path outScanPointPath as ScanPointPath = "Path({Point2D(integer(inTemplWidth/2)-50, integer(inTemplStripeLocY+5)), Point2D(integer(inTemplWidth/2)+50, integer(inTemplStripeLocY+5))})"
+	}
+	(
+		inTemplStripeLocX: con_4eca4af7_b08c_49ae_aa23_f6c9fe8d1ac9
+		inTemplStripeLocY: con_dd3e646b_d116_4732_a959_4220e61af030
+		inTemplHeight: con_f5867482_bd42_42f5_8962_d373b62bcbe4
+		inTemplWidth: con_20a6d1e9_6ae9_4c2a_8d78_b73d1b3c110a
+		outScanPointPath: con_44dd5d31_6ead_4dac_8079_5618f795cf59
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_974e9f3a_03d7_4a20_8621_a48f022a886a
+		outMonoImg: con_e25d5bf2_6d4e_4bd0_ba0b_eea9938530d1
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inMinDistance] TRUE
+	//:HIDDENPORT[inMaxDistance] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdges] TRUE
+	//:HIDDENPORT[outGaps] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanMultipleEdges
+	(
+		inImage: con_e25d5bf2_6d4e_4bd0_ba0b_eea9938530d1
+		inScanPath: con_44dd5d31_6ead_4dac_8079_5618f795cf59
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams: SamplingParams()
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.600000
+				MinMagnitude: 5.000000
+				EdgeTransition: Any
+			)
+		inMinDistance: 0.000000
+		inMaxDistance: Nil
+		inLocalBlindness: Nil
+		outEdges: Nil
+		outGaps: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdges.Point: con_f90db661_1e18_4cbf_b693_a02059c41c07
+		outEdges.Magnitude: Nil
+	)
+
+	ArraySize<Point2D>
+	(
+		inArray: con_f90db661_1e18_4cbf_b693_a02059c41c07
+		outSize: con_19d31bd7_933f_40af_b43b_4517e5c9f72b
+	)
+
+	//:EXPLICITTYPE[out_point_iterator] true
+	expression
+	{
+		Integer inEdgeArraySize
+		Integer out_point_iterator = "integer(inEdgeArraySize/2)"
+	}
+	(
+		inEdgeArraySize: con_19d31bd7_933f_40af_b43b_4517e5c9f72b
+		out_point_iterator: con_0a79db12_8198_4ecc_867a_72b926006265
+	)
+
+	//:HIDDENPORT[inInverse] TRUE
+	GetArrayElement_OrNil<Point2D>
+	(
+		inArray: con_f90db661_1e18_4cbf_b693_a02059c41c07
+		inIndex: con_0a79db12_8198_4ecc_867a_72b926006265
+		inInverse: False
+		outConditionalValue: Nil
+		outConditionalValue.X: con_ccbf18c4_3439_40d9_81e4_309cb78dc59d
+		outConditionalValue.Y: con_7f6994b2_2565_4157_9eb4_3650772767df
+	)
+
+	//Formuła uzupełniona
+	//:EXPLICITTYPE[outTemplBox_Left] true
+	//:EXPLICITTYPE[outTemplBox_Right] true
+	expression
+	{
+		Integer inStripeDivisionPoint_X
+		Integer inTemplHeight
+		Integer inTemplWidth
+		Box outTemplBox_Left = "Box(\r\n0,\r\n0,\r\ninteger(inStripeDivisionPoint_X),\r\ninTemplHeight)"
+		Box outTemplBox_Right = "Box(\r\ninteger(inStripeDivisionPoint_X),\r\n0,\r\ninteger(inTemplWidth-inStripeDivisionPoint_X),\r\ninTemplHeight) "
+		Vector2D outTranslationVector = "Vector2D (-inStripeDivisionPoint_X,0)"
+	}
+	(
+		inStripeDivisionPoint_X: con_ccbf18c4_3439_40d9_81e4_309cb78dc59d
+		inTemplHeight: con_f5867482_bd42_42f5_8962_d373b62bcbe4
+		inTemplWidth: con_20a6d1e9_6ae9_4c2a_8d78_b73d1b3c110a
+		outTemplBox_Left: con_28355c6c_1f58_407d_896a_8970b9007326
+		outTemplBox_Right: con_a1aa900e_7fdc_4a9b_9c20_93817e16dd14
+		outTranslationVector: Nil
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: con_974e9f3a_03d7_4a20_8621_a48f022a886a
+		inSelection: con_28355c6c_1f58_407d_896a_8970b9007326
+		inBorderColor: Pixel()
+		outImage: con_e6f04056_ad53_4e9e_9a5e_0ca4dbdb75a8
+		outImage.Width: con_487558e4_5f44_487e_bb19_acf993ace451
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: con_974e9f3a_03d7_4a20_8621_a48f022a886a
+		inSelection: con_a1aa900e_7fdc_4a9b_9c20_93817e16dd14
+		inBorderColor: Pixel()
+		outImage: con_3a04203d_cee3_4c33_b720_93c680b7b121
+		outImage.Width: con_f5b2fb7a_538a_49d3_a088_bc7350b70be2
+	)
+
+	parameters write
+	{
+		inputs: Templ_Left, Templ_Right
+	}
+	(
+		inTempl_Left: con_e6f04056_ad53_4e9e_9a5e_0ca4dbdb75a8
+		inTempl_Right: con_3a04203d_cee3_4c33_b720_93c680b7b121
+	)
+
+	//Creating BB for searching for the QE stripe in both left and rigth camera. The search for the BB should be done i the center off the image. 
+	//:EXPLICITTYPE[outQESearchBox_Left] true
+	//:EXPLICITTYPE[outQESearchBox_Right] true
+	expression
+	{
+		Integer inStripeDivisionPoint_Y
+		Integer inTempl_Left_width
+		Integer inTempl_Right_width
+		Integer in_BB_width
+		Integer in_BB_height
+		Box outQESearchBox_Left = "Box(\r\ninteger(0),\r\ninteger(inStripeDivisionPoint_Y-in_BB_height/2),\r\nin_BB_width,\r\nin_BB_height)"
+		Box outQESearchBox_Right = "Box(\r\ninteger(inTempl_Right_width-in_BB_width),\r\ninteger(inStripeDivisionPoint_Y-in_BB_height/2),\r\ninteger(in_BB_width),\r\nin_BB_height)"
+	}
+	(
+		inStripeDivisionPoint_Y: con_7f6994b2_2565_4157_9eb4_3650772767df
+		inTempl_Left_width: con_487558e4_5f44_487e_bb19_acf993ace451
+		inTempl_Right_width: con_f5b2fb7a_538a_49d3_a088_bc7350b70be2
+		in_BB_width: 3500
+		in_BB_height: 80
+		outQESearchBox_Left: con_890b49dd_3b4f_478e_b0e2_95e3dd32a48b
+		outQESearchBox_Right: con_b5de2331_1a42_4098_a3d9_92a1787726d7
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_e6f04056_ad53_4e9e_9a5e_0ca4dbdb75a8
+		outMonoImg: con_ecd385e9_cc9a_4a84_830f_91137e0dccb8
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_ecd385e9_cc9a_4a84_830f_91137e0dccb8
+		inSearchRegion: con_890b49dd_3b4f_478e_b0e2_95e3dd32a48b
+		inSearchRegionAlignment: Nil
+		inGrayModel: StripeModel_SingleCam
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.500000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin: con_62b79c82_4200_40a9_a213_dbd93fa1f934
+		outObject.Alignment: Nil
+		outObject.Score: Nil
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_3a04203d_cee3_4c33_b720_93c680b7b121
+		outMonoImg: con_e5d3d892_5234_4209_baee_3d381b960ae3
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_e5d3d892_5234_4209_baee_3d381b960ae3
+		inSearchRegion: con_b5de2331_1a42_4098_a3d9_92a1787726d7
+		inSearchRegionAlignment: Nil
+		inGrayModel: StripeModel_SingleCam
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.500000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin: con_7077f49c_e46c_4f97_a9fd_078c12ca4552
+		outObject.Alignment: Nil
+		outObject.Score: Nil
+	)
+
+	parameters write
+	{
+		inputs: TemplStripeLoc_Left, TemplStripeLoc_Right
+	}
+	(
+		inTemplStripeLoc_Left: con_62b79c82_4200_40a9_a213_dbd93fa1f934
+		inTemplStripeLoc_Right: con_7077f49c_e46c_4f97_a9fd_078c12ca4552
+	)
+
+	outTempl_Left = con_e6f04056_ad53_4e9e_9a5e_0ca4dbdb75a8
+
+	outTempl_Right = con_3a04203d_cee3_4c33_b720_93c680b7b121
+}
+
+public _PrepareLRSearchTiles() step
+{
+	//Lewa strona
+
+	//Template should be saved for both cameras.
+	parameters read
+	{
+		outputs: Templ_Left
+	}
+	(
+		outTempl_Left: con_1a3bb9c6_a825_4afe_a0f8_b0f59c8bdd5b
+		outTempl_Left.Width: con_48fccae4_2ed4_481f_bdc5_faa29bccee8b
+		outTempl_Left.Height: con_ee69211e_4ed3_4672_b151_70119b7ef33f
+	)
+
+	//Should be enough to perform this only at the beginning. Result Points (grid map) should be the same - they are used as reference localization to cut samples into tiles.
+	__DefineResultsPoints
+	(
+		inResultSize: ResultSize
+		inSearchSize: SearchSize
+		inImageRefWidth: con_48fccae4_2ed4_481f_bdc5_faa29bccee8b
+		inImageRefHeight: con_ee69211e_4ed3_4672_b151_70119b7ef33f
+		outResultsPoints: con_4aecb3f6_fdac_4596_857c_c15fc1b1de53
+	)
+
+	__CropSearchTiles
+	(
+		inPoint: con_4aecb3f6_fdac_4596_857c_c15fc1b1de53
+		inSearchSize: SearchSize
+		inRefImage: con_1a3bb9c6_a825_4afe_a0f8_b0f59c8bdd5b
+		inInterpolation: NearestNeighbour
+		outSearchTiles: con_0bba7980_ae9f_45ae_8067_555110dad105
+	)
+
+	//Prawa strona 
+
+	//Template should be saved for both cameras.
+	parameters read
+	{
+		outputs: Templ_Right
+	}
+	(
+		outTempl_Right: con_e2174805_ab6a_488e_8b3f_6257521c997e
+		outTempl_Right.Width: con_95d164a7_001f_4ade_a294_5584b47c8fcc
+		outTempl_Right.Height: con_67e6a792_165a_4a9d_b3d1_5e90ac5c5e4f
+	)
+
+	//Should be enough to perform this only at the beginning. Result Points (grid map) should be the same - they are used as reference localization to cut samples into tiles.
+	__DefineResultsPoints
+	(
+		inResultSize: ResultSize
+		inSearchSize: SearchSize
+		inImageRefWidth: con_95d164a7_001f_4ade_a294_5584b47c8fcc
+		inImageRefHeight: con_67e6a792_165a_4a9d_b3d1_5e90ac5c5e4f
+		outResultsPoints: con_21e5a55e_3ecb_486a_b817_cc12f054120e
+	)
+
+	__CropSearchTiles
+	(
+		inPoint: con_21e5a55e_3ecb_486a_b817_cc12f054120e
+		inSearchSize: SearchSize
+		inRefImage: con_e2174805_ab6a_488e_8b3f_6257521c997e
+		inInterpolation: NearestNeighbour
+		outSearchTiles: con_4c3bd8dd_b52d_4ccd_9333_21d0e8f1b0c9
+	)
+
+	//zapis danych
+
+	//SearchTiles should be a set of tiles for Left and seperately for Right Camera Image.
+	parameters write
+	{
+		inputs: ResultPoints, SearchTiles_Left, SearchTiles_Right, ResultPoints_Left, ResultPoints_Rigth
+	}
+	(
+		inResultPoints: con_4aecb3f6_fdac_4596_857c_c15fc1b1de53
+		inSearchTiles_Left: con_0bba7980_ae9f_45ae_8067_555110dad105
+		inSearchTiles_Right: con_4c3bd8dd_b52d_4ccd_9333_21d0e8f1b0c9
+		inResultPoints_Left: con_4aecb3f6_fdac_4596_857c_c15fc1b1de53
+		inResultPoints_Rigth: con_21e5a55e_3ecb_486a_b817_cc12f054120e
+	)
+}
+
+public __CropSample_Left(Image inSampl, GrayModel inStripeModel, Point2D inTemplStripeLoc, Image inTempl_left, Image? outSampl) step
+	expand inSampl.Height
+	expand inTemplStripeLoc.X
+	expand inTemplStripeLoc.Y
+	expand inSampl.Width
+	expand inTempl_left.Width
+	expand inTempl_left.Height
+	expand inSampl.Depth
+{
+	__ConvertLabToMono
+	(
+		inImg: inSampl
+		outMonoImg: con_46148aa5_a18e_47fa_9efc_e4d575212401
+	)
+
+	//:EXPLICITTYPE[outBox] true
+	expression
+	{
+		Integer inTemplStripeLocX
+		Integer inTemplStripeLocY
+		Integer inSamplWidth
+		Integer inSamplHeight
+		Integer inTemplHeight
+		Box outBox = "Box(inTemplStripeLocX,inTemplStripeLocY-100,2048,inSamplHeight-inTemplHeight+100)"
+	}
+	(
+		inTemplStripeLocX: inTemplStripeLoc.X
+		inTemplStripeLocY: inTemplStripeLoc.Y
+		inSamplWidth: inSampl.Width
+		inSamplHeight: inSampl.Height
+		inTemplHeight: inTempl_left.Height
+		outBox: con_974a80f9_ab81_459a_a19b_1572b14b235f
+	)
+
+	//Usunięto połączenie pomięcy BOX, a search region
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_46148aa5_a18e_47fa_9efc_e4d575212401
+		inSearchRegion: con_974a80f9_ab81_459a_a19b_1572b14b235f
+		inSearchRegionAlignment: Nil
+		inGrayModel: inStripeModel
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.500000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin: Nil
+		outObject.Match.Origin.X: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		outObject.Match.Origin.Y: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		outObject.Match.Width: con_0f0b06c1_6b21_4269_a4a2_840bc638c237
+		outObject.Match.Height: con_bb4270da_2f7f_470d_88bb_cf91bbf2faea
+		outObject.Alignment: Nil
+		outObject.Alignment.Scale: Nil
+		outObject.Scale: Nil
+		outObject.Score: Nil
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSampleMatchHeight
+		Path outScanPointPath = "Path({Point2D(0, inSamplStripeLocY+inSampleMatchHeight/2), Point2D(inSamplStripeLocX+60, inSamplStripeLocY+inSampleMatchHeight/2)})"
+	}
+	(
+		inSamplStripeLocX: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSampleMatchHeight: con_bb4270da_2f7f_470d_88bb_cf91bbf2faea
+		outScanPointPath: con_ec9875a4_14eb_465e_96e8_2533be5a4b8e
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: con_46148aa5_a18e_47fa_9efc_e4d575212401
+		inScanPath: con_ec9875a4_14eb_465e_96e8_2533be5a4b8e
+		inScanPathAlignment: Nil
+		inScanWidth: 25
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: NearestNeighbour
+				SamplingStep: 2.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 1.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: DarkToBright
+			)
+		inEdgeSelection: Best
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_58f01d69_ce2f_4dc0_9659_423f37f59df4
+		outEdge.Point.Y: Nil
+		outEdge.Magnitude: Nil
+	)
+
+	//dodanie szukania drugiego koñca template 
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSampleMatchHeight
+		Integer inSamplMatchWidth
+		Real inTemplStripeLocX
+		Path outScanPointPath = "Path({Point2D(inSamplStripeLocX + inSamplMatchWidth + 112, inSamplStripeLocY+inSampleMatchHeight/2), Point2D(inSamplStripeLocX + inSamplMatchWidth + 124, inSamplStripeLocY+inSampleMatchHeight/2)})"
+	}
+	(
+		inSamplStripeLocX: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSampleMatchHeight: con_bb4270da_2f7f_470d_88bb_cf91bbf2faea
+		inSamplMatchWidth: con_0f0b06c1_6b21_4269_a4a2_840bc638c237
+		inTemplStripeLocX: inTemplStripeLoc.X
+		outScanPointPath: con_24309380_3bae_41dd_ab39_8e30dafba088
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: con_46148aa5_a18e_47fa_9efc_e4d575212401
+		inScanPath: con_24309380_3bae_41dd_ab39_8e30dafba088
+		inScanPathAlignment: Nil
+		inScanWidth: 15
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: NearestNeighbour
+				SamplingStep: 1.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 2.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: DarkToBright
+			)
+		inEdgeSelection: Best
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_441c5bd4_e455_404a_ac62_9ecf59dae2d3
+		outEdge.Point.Y: Nil
+		outEdge.Magnitude: Nil
+	)
+
+	//znalezienie skali
+
+	expression
+	{
+		Real inEdgePointX_LeftSide
+		Real inEdgePointX_RightSide
+		Real inObjectMatchWidth
+		Real outScale = "(inObjectMatchWidth/(inEdgePointX_RightSide-inEdgePointX_LeftSide))"
+	}
+	(
+		inEdgePointX_LeftSide: con_58f01d69_ce2f_4dc0_9659_423f37f59df4
+		inEdgePointX_RightSide: con_441c5bd4_e455_404a_ac62_9ecf59dae2d3
+		inObjectMatchWidth: con_0f0b06c1_6b21_4269_a4a2_840bc638c237
+		outScale: Nil
+	)
+
+	//:EXPLICITTYPE[outSamplBox] true
+	expression
+	{
+		Integer inTemplStripeLocY
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSamplWidth
+		Integer inSamplHeight
+		Integer inTemplHeight
+		Integer inTemplWidth
+		Integer inLeftEdge
+		Integer inRightEdge
+		Box outSamplBox = "Box(inLeftEdge,\r\ninSamplStripeLocY-inTemplStripeLocY,\r\ninRightEdge-inLeftEdge,inTemplHeight)"
+	}
+	(
+		inTemplStripeLocY: inTemplStripeLoc.Y
+		inSamplStripeLocX: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSamplWidth: inSampl.Width
+		inSamplHeight: inSampl.Height
+		inTemplHeight: inTempl_left.Height
+		inTemplWidth: 0
+		inLeftEdge: con_58f01d69_ce2f_4dc0_9659_423f37f59df4
+		inRightEdge: con_441c5bd4_e455_404a_ac62_9ecf59dae2d3
+		outSamplBox: con_5ec68c9e_0fb1_49f6_ad0c_ef1898e94df6
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inSampl
+		inSelection: con_5ec68c9e_0fb1_49f6_ad0c_ef1898e94df6
+		inBorderColor: Pixel()
+		outImage: con_5e44fec8_d372_4702_974e_e0c05814d79a
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: con_5e44fec8_d372_4702_974e_e0c05814d79a
+		inNewWidth: inTempl_left.Width
+		inNewHeight: inTempl_left.Height
+		inResizeMethod: Bilinear
+		outImage: con_58e0aa97_f07a_4936_9eb8_526b14495b90
+		outImage.Depth: Nil
+	)
+
+	outSampl = con_58e0aa97_f07a_4936_9eb8_526b14495b90
+}
+
+public __CropSample_Right(Image inSampl, GrayModel inStripeModel, Point2D inTemplStripeLoc, Image inTempl, Image? outSampl) step
+	expand inSampl.Height
+	expand inTemplStripeLoc.X
+	expand inTemplStripeLoc.Y
+	expand inSampl.Width
+	expand inTempl.Width
+	expand inTempl.Height
+{
+	__ConvertLabToMono
+	(
+		inImg: inSampl
+		outMonoImg: con_66ee2139_eab0_4f95_b95e_0837d3bf5949
+	)
+
+	//:EXPLICITTYPE[outBox] true
+	expression
+	{
+		Integer inTemplStripeLocX
+		Integer inTemplStripeLocY
+		Integer inSamplWidth
+		Integer inSamplHeight
+		Integer inTemplHeight
+		Box outBox = "Box(inTemplStripeLocX+100,inTemplStripeLocY-100,2048,inSamplHeight-inTemplHeight+100)"
+	}
+	(
+		inTemplStripeLocX: inTemplStripeLoc.X
+		inTemplStripeLocY: inTemplStripeLoc.Y
+		inSamplWidth: inSampl.Width
+		inSamplHeight: inSampl.Height
+		inTemplHeight: inTempl.Height
+		outBox: con_c0b1c499_0877_41d4_a66b_caecd60334fa
+	)
+
+	//Usunięto połączenie pomięcy BOX, a search region
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_66ee2139_eab0_4f95_b95e_0837d3bf5949
+		inSearchRegion: con_c0b1c499_0877_41d4_a66b_caecd60334fa
+		inSearchRegionAlignment: Nil
+		inGrayModel: inStripeModel
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.200000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin: Nil
+		outObject.Match.Origin.X: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		outObject.Match.Origin.Y: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		outObject.Match.Width: con_396581b9_f641_48b4_aca8_a6b3f8a9c2c6
+		outObject.Match.Height: con_cb052a98_e9fa_4aec_b343_50a11e139f1f
+		outObject.Alignment: Nil
+		outObject.Point: Nil
+		outObject.Scale: Nil
+		outObject.Score: Nil
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSampleMatchHeight
+		Integer inSamplMatchWidth
+		Real inTemplStripeLocX
+		Path outScanPointPath = "Path({Point2D(inSamplStripeLocX - 268, inSamplStripeLocY+inSampleMatchHeight/2), Point2D(inSamplStripeLocX - 255, inSamplStripeLocY+inSampleMatchHeight/2)})"
+	}
+	(
+		inSamplStripeLocX: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSampleMatchHeight: con_cb052a98_e9fa_4aec_b343_50a11e139f1f
+		inSamplMatchWidth: con_396581b9_f641_48b4_aca8_a6b3f8a9c2c6
+		inTemplStripeLocX: 0.000000
+		outScanPointPath: con_e93da1cc_fa47_4c4d_99de_b4ea2ec558ad
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: con_66ee2139_eab0_4f95_b95e_0837d3bf5949
+		inScanPath: con_e93da1cc_fa47_4c4d_99de_b4ea2ec558ad
+		inScanPathAlignment: Nil
+		inScanWidth: 15
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: Bilinear
+				SamplingStep: 2.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 1.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: DarkToBright
+			)
+		inEdgeSelection: Last
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_0f745727_a05e_4df7_94d3_59090b081e05
+		outEdge.Point.Y: Nil
+		outEdge.Magnitude: Nil
+	)
+
+	//dodanie szukania drugiego koñca template 
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSampleMatchHeight
+		Real inSamplMatchWidth
+		Integer inSamplWidth
+		Path outScanPointPath = "Path({Point2D(inSamplWidth, inSamplStripeLocY+inSampleMatchHeight/2), Point2D(inSamplStripeLocX+inSamplMatchWidth+60, inSamplStripeLocY+inSampleMatchHeight/2)})"
+	}
+	(
+		inSamplStripeLocX: con_b996bf64_91a0_4b5a_bc73_a8437b168ff0
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSampleMatchHeight: con_cb052a98_e9fa_4aec_b343_50a11e139f1f
+		inSamplMatchWidth: con_396581b9_f641_48b4_aca8_a6b3f8a9c2c6
+		inSamplWidth: inSampl.Width
+		outScanPointPath: con_07ed072a_08c7_478f_8ffb_f7acc2dcd971
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: con_66ee2139_eab0_4f95_b95e_0837d3bf5949
+		inScanPath: con_07ed072a_08c7_478f_8ffb_f7acc2dcd971
+		inScanPathAlignment: Nil
+		inScanWidth: 15
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: Bilinear
+				SamplingStep: 2.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 1.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: DarkToBright
+			)
+		inEdgeSelection: Best
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_6f77f9aa_1e1f_4059_911f_efc032113605
+		outEdge.Point.Y: Nil
+		outEdge.Magnitude: Nil
+	)
+
+	//znalezienie skali
+
+	expression
+	{
+		Real inEdgePointX_LeftSide
+		Real inEdgePointX_RightSide
+		Real inObjectMatchWidth
+		Real outScale = "(inObjectMatchWidth/(inEdgePointX_RightSide-inEdgePointX_LeftSide))"
+	}
+	(
+		inEdgePointX_LeftSide: con_0f745727_a05e_4df7_94d3_59090b081e05
+		inEdgePointX_RightSide: con_6f77f9aa_1e1f_4059_911f_efc032113605
+		inObjectMatchWidth: con_396581b9_f641_48b4_aca8_a6b3f8a9c2c6
+		outScale: con_d5a5ad12_28e1_4432_b475_d7c1287c7251
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outSamplBox] true
+	disabled expression
+	{
+		Integer inTemplStripeLocX
+		Integer inTemplStripeLocY
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSamplWidth
+		Integer inTemplHeight
+		Box outSamplBox = "Box(\r\ninSamplStripeLocX-inTemplStripeLocX,\r\ninSamplStripeLocY-inTemplStripeLocY,\r\ninSamplWidth-(inSamplStripeLocX-inTemplStripeLocX),\r\ninTemplHeight)"
+	}
+	(
+		inTemplStripeLocX: inTemplStripeLoc.X
+		inTemplStripeLocY: inTemplStripeLoc.Y
+		inSamplStripeLocX: con_0f745727_a05e_4df7_94d3_59090b081e05
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSamplWidth: inSampl.Width
+		inTemplHeight: inTempl.Height
+		outSamplBox: con_5ec68c9e_0fb1_49f6_ad0c_ef1898e94df6
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outSamplBox] true
+	disabled expression
+	{
+		Integer inTemplStripeLocX
+		Integer inTemplStripeLocY
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inTemplHeight
+		Real inScale
+		Integer inTemplateWidth
+		Box outSamplBox = "Box(\r\ninteger(inSamplStripeLocX-inTemplStripeLocX/inScale),\r\ninSamplStripeLocY-inTemplStripeLocY,\r\ninteger(inTemplateWidth/inScale),\r\ninTemplHeight)"
+	}
+	(
+		inTemplStripeLocX: inTemplStripeLoc.X
+		inTemplStripeLocY: 0
+		inSamplStripeLocX: con_0f745727_a05e_4df7_94d3_59090b081e05
+		inSamplStripeLocY: 0
+		inTemplHeight: 0
+		inScale: con_d5a5ad12_28e1_4432_b475_d7c1287c7251
+		inTemplateWidth: inTempl.Width
+		outSamplBox: con_d80a1164_d303_4f92_b5ad_db05c04dce01
+	)
+
+	//:EXPLICITTYPE[outSamplBox] true
+	expression
+	{
+		Integer inTemplStripeLocY
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSamplWidth
+		Integer inSamplHeight
+		Integer inTemplHeight
+		Integer inTemplWidth
+		Integer inLeftEdge
+		Integer inRightEdge
+		Box outSamplBox = "Box(inLeftEdge,\r\ninSamplStripeLocY-inTemplStripeLocY,\r\ninRightEdge-inLeftEdge,inTemplHeight)"
+	}
+	(
+		inTemplStripeLocY: inTemplStripeLoc.Y
+		inSamplStripeLocX: 0
+		inSamplStripeLocY: con_30483f5b_ce1f_418c_80d8_b0d5ae48d4f3
+		inSamplWidth: 0
+		inSamplHeight: 0
+		inTemplHeight: inTempl.Height
+		inTemplWidth: 0
+		inLeftEdge: con_0f745727_a05e_4df7_94d3_59090b081e05
+		inRightEdge: con_6f77f9aa_1e1f_4059_911f_efc032113605
+		outSamplBox: con_ab787bad_2141_4ce0_a5bf_5cd791e11fba
+	)
+
+	disabled MergeDefault<Box>
+	(
+		inConditionalObject: con_d80a1164_d303_4f92_b5ad_db05c04dce01
+		inDefaultObject: con_5ec68c9e_0fb1_49f6_ad0c_ef1898e94df6
+		outObject: Nil
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inSampl
+		inSelection: con_ab787bad_2141_4ce0_a5bf_5cd791e11fba
+		inBorderColor: Pixel()
+		outImage: con_5e44fec8_d372_4702_974e_e0c05814d79a
+	)
+
+	//:HIDDENPORT[inResizeMethod] TRUE
+	ResizeImage
+	(
+		inImage: con_5e44fec8_d372_4702_974e_e0c05814d79a
+		inNewWidth: inTempl.Width
+		inNewHeight: inTempl.Height
+		inResizeMethod: Bilinear
+		outImage: con_58e0aa97_f07a_4936_9eb8_526b14495b90
+	)
+
+	outSampl = con_58e0aa97_f07a_4936_9eb8_526b14495b90
+}
+
+public _0_Init(Image inTempl) step
+{
+	_PrepareStripeModel
+	(
+		outStripeModel: con_f302b0c2_8b41_459f_9071_3f145368ec05
+		outStripeModel_single_camera: con_95d61cc3_614d_4f0c_a501_1c175111a2d6
+	)
+
+	parameters write
+	{
+		inputs: StripeModel, StripeModel_SingleCam
+	}
+	(
+		inStripeModel: con_f302b0c2_8b41_459f_9071_3f145368ec05
+		inStripeModel_SingleCam: con_95d61cc3_614d_4f0c_a501_1c175111a2d6
+	)
+
+	parameters read
+	{
+		outputs: Prescaler, MarginUp, MarginDown
+	}
+	(
+		outPrescaler: con_9aac5f7d_c127_4464_86ca_b48ce0dd7d88
+		outMarginUp: con_39520adb_0c32_4762_a207_a59c24f58d90
+		outMarginDown: con_c7ee8ad9_70ca_4225_b095_079ae4955419
+	)
+
+	_CropTempl
+	(
+		inTemplLab: inTempl
+		inPrescaler: con_9aac5f7d_c127_4464_86ca_b48ce0dd7d88
+		inMarginUp: con_39520adb_0c32_4762_a207_a59c24f58d90
+		inMarginDown: con_c7ee8ad9_70ca_4225_b095_079ae4955419
+		inStripeModel: con_f302b0c2_8b41_459f_9071_3f145368ec05
+		outTemplStripeLoc: con_84a85491_7c56_4be9_965c_97894f61d6f0
+		outTemplLab: con_e3d0c70b_16ad_4249_a7a9_6b38ccad5714
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_e3d0c70b_16ad_4249_a7a9_6b38ccad5714
+		outMonoImg: con_68ffc0a2_05e5_412a_b560_a0e7a8328440
+	)
+
+	//:BGIMAGE[inSelection] @input:inImage
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: con_68ffc0a2_05e5_412a_b560_a0e7a8328440
+		inSelection:
+			Box
+			(
+				X: 1405
+				Y: 434
+				Width: 621
+				Height: 13
+			)
+		inBorderColor: Pixel()
+		outImage: Nil
+	)
+
+	parameters write
+	{
+		inputs: Templ, TemplStripeLoc
+	}
+	(
+		inTempl: con_e3d0c70b_16ad_4249_a7a9_6b38ccad5714
+		inTemplStripeLoc: con_84a85491_7c56_4be9_965c_97894f61d6f0
+	)
+
+	//Cutting Template for Left and Right Camera
+	//
+	//(at the beginning and everytime the template is adjusted - _Main_3_Update).
+	_PrepareLRTemplates
+	(
+		outTempl_Left: con_22ad74cf_b60e_4948_ae63_e5cd5ea212ed
+		outTempl_Right: con_fafd2bb3_8667_4588_94c7_c16e8dcb1fca
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_22ad74cf_b60e_4948_ae63_e5cd5ea212ed
+		outMonoImg: con_232f3d0f_1f3c_46aa_9f00_aa51397cf455
+	)
+
+	_FindFeatures
+	(
+		inTempl: con_232f3d0f_1f3c_46aa_9f00_aa51397cf455
+		outFeatureLoc: con_8ab5dd16_6159_4a95_a00b_25d0b47af876
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_fafd2bb3_8667_4588_94c7_c16e8dcb1fca
+		outMonoImg: con_9a26f92d_90da_45e6_b074_2865b3cde54e
+	)
+
+	_FindFeatures
+	(
+		inTempl: con_9a26f92d_90da_45e6_b074_2865b3cde54e
+		outFeatureLoc: con_18b1f5d6_4e83_4179_adc7_f6a9f9da4d4d
+	)
+
+	parameters write
+	{
+		inputs: FeatLoc_Left, FeatLoc_Right
+	}
+	(
+		inFeatLoc_Left: con_8ab5dd16_6159_4a95_a00b_25d0b47af876
+		inFeatLoc_Right: con_18b1f5d6_4e83_4179_adc7_f6a9f9da4d4d
+	)
+
+	_PrepareLRSearchTiles
+	(
+	)
+
+	parameters write
+	{
+		inputs: ProcessIterator
+	}
+	(
+		inProcessIterator: 0
+	)
+
+	parameters write
+	{
+		inputs: SamplLeftReady, SamplRightReady
+	}
+	(
+		inSamplLeftReady: False
+		inSamplRightReady: False
+	)
+}
+
+public _UpdateOneSide(Image inRef, Image inSampl, Point2DArray inFeatureLoc, Image inDisplMap, Point2D inTemplStripeLoc, Real inShear, Image outDisplMap, Image outTempl, Real? outShear, Point2DArray outFeatureLoc) step
+{
+	__ConvertLabToMono
+	(
+		inImg: inRef
+		outMonoImg: con_d2359c78_f0df_4153_a0d6_281b57f1fdcd
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: inSampl
+		outMonoImg: con_10be7278_8f84_478a_92f2_1bf8fca96a83
+	)
+
+	_MeasureGlobalScale
+	(
+		inRef: con_d2359c78_f0df_4153_a0d6_281b57f1fdcd
+		inSampl: con_10be7278_8f84_478a_92f2_1bf8fca96a83
+		inFeatureLoc: inFeatureLoc
+		outScale: con_7b0ade53_fd8c_4ab4_9148_5c2554445501
+		outShear: con_b3213756_04e9_4c68_968c_b03c9bdd4731
+		outTranslationX: con_1ea53687_4e6e_4046_87ee_81fbc99a49d4
+	)
+
+	_Shear_calculate
+	(
+		inSampl: con_10be7278_8f84_478a_92f2_1bf8fca96a83
+		inTemplStripeLoc: inTemplStripeLoc
+		inShear: inShear
+		outShearUpdate: con_f147a4aa_45a7_4cfb_abc3_379cf62e306b
+		outShearAbsolute: con_92223028_41c9_44b4_b74a_3c946d935676
+	)
+
+	MergeDefault<Real>
+	(
+		inConditionalObject: con_f147a4aa_45a7_4cfb_abc3_379cf62e306b
+		inDefaultObject: con_b3213756_04e9_4c68_968c_b03c9bdd4731
+		outObject: con_e7cc0b40_03b6_4992_a02a_c0522ee546b5
+	)
+
+	_ApplyGlobalScale
+	(
+		inScale: con_7b0ade53_fd8c_4ab4_9148_5c2554445501
+		inShear: con_e7cc0b40_03b6_4992_a02a_c0522ee546b5
+		inTranslationX: con_1ea53687_4e6e_4046_87ee_81fbc99a49d4
+		inTempl: inRef
+		outTempl: con_3fd48c64_d74c_4db8_b1d9_d3869ab90bfc
+	)
+
+	__ConvertLabToMono
+	(
+		inImg: con_3fd48c64_d74c_4db8_b1d9_d3869ab90bfc
+		outMonoImg: con_4d5258e3_6656_4941_9df1_14707a95f097
+	)
+
+	_MeasureLocalDispl
+	(
+		inRef: con_4d5258e3_6656_4941_9df1_14707a95f097
+		inSampl: con_10be7278_8f84_478a_92f2_1bf8fca96a83
+		outDisplLoc: con_f2dc0a73_b34a_4466_b3e2_d759bc0a2dfb
+		outDispl: con_75d097af_18cd_43a8_9339_bccff91445c5
+	)
+
+	_CorrectDisplMap
+	(
+		inDispl: con_75d097af_18cd_43a8_9339_bccff91445c5
+		inDisplLoc: con_f2dc0a73_b34a_4466_b3e2_d759bc0a2dfb
+		inDisplMap: inDisplMap
+		outDisplMap: con_9852d863_fa76_4aa5_ae65_2fff00497150
+	)
+
+	_ApplyDisplMap
+	(
+		inDisplMap: con_9852d863_fa76_4aa5_ae65_2fff00497150
+		inTempl: con_3fd48c64_d74c_4db8_b1d9_d3869ab90bfc
+		outTempl: con_0debc030_d278_4add_a14e_3ede0ad911f4
+		outTempl.Width: con_38ec75a5_118b_4d1b_b716_4ba7b8b186ec
+		outTempl.Height: con_ed17c5fd_37e6_48bb_b591_df2637729228
+	)
+
+	diagnostic DifferenceImage_Flex
+	(
+		inImage1: con_3fd48c64_d74c_4db8_b1d9_d3869ab90bfc
+		inImage2: con_0debc030_d278_4add_a14e_3ede0ad911f4
+		inBox1: Nil
+		inBox2: Nil
+		inTileWidth: 25
+		inTileHeight: Nil
+		inTileTranslationMode: FourDirections
+		inOutputFromColorImage: False
+		outImage: Nil
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inSampl
+		inBorderColor:
+			Pixel
+			(
+				X: 255.000000
+				Y: 255.000000
+				Z: 255.000000
+				W: 0.000000
+			)
+		inSelection.X: 0
+		inSelection.Y: 0
+		inSelection.Width: con_38ec75a5_118b_4d1b_b716_4ba7b8b186ec
+		inSelection.Height: con_ed17c5fd_37e6_48bb_b591_df2637729228
+		outImage: con_96afb259_9449_4e87_8dcf_737b102d8520
+	)
+
+	diagnostic DifferenceImage_Flex
+	(
+		inImage1: con_96afb259_9449_4e87_8dcf_737b102d8520
+		inImage2: con_0debc030_d278_4add_a14e_3ede0ad911f4
+		inBox1: Nil
+		inBox2: Nil
+		inTileWidth: 25
+		inTileHeight: Nil
+		inTileTranslationMode: FourDirections
+		inOutputFromColorImage: False
+		outImage: Nil
+	)
+
+	//:HIDDENPORT[inMaxSize] TRUE
+	//:HIDDENPORT[inReset] TRUE
+	AccumulateElements<Real>
+	(
+		inElement: con_b3213756_04e9_4c68_968c_b03c9bdd4731
+		inCondition: True
+		inMaxSize: Nil
+		inReset: False
+		outArray: Nil
+	)
+
+	_FindFeatures
+	(
+		inTempl: con_0debc030_d278_4add_a14e_3ede0ad911f4
+		outFeatureLoc: con_a573ebf5_a82b_4f9a_a97d_8850cec48765
+	)
+
+	outDisplMap = con_9852d863_fa76_4aa5_ae65_2fff00497150
+
+	outTempl = con_0debc030_d278_4add_a14e_3ede0ad911f4
+
+	outShear = con_92223028_41c9_44b4_b74a_3c946d935676
+
+	outFeatureLoc = con_a573ebf5_a82b_4f9a_a97d_8850cec48765
+}
+
+public _Shear_calculate(Image inSampl, Point2D inTemplStripeLoc, Real inShear, Real? outShearUpdate, Real? outShearAbsolute) step
+	expand inTemplStripeLoc.X
+	expand inTemplStripeLoc.Y
+	expand inSampl.Width
+	expand inSampl.Height
+{
+	//:EXPLICITTYPE[outBox] true
+	expression
+	{
+		Integer inTemplStripeLocX
+		Integer inTemplStripeLocY
+		Integer inSamplWidth
+		Integer inSamplHeight
+		Box outBox = "Box(inTemplStripeLocX-200,inTemplStripeLocY-50,3500,140)"
+	}
+	(
+		inTemplStripeLocX: inTemplStripeLoc.X
+		inTemplStripeLocY: inTemplStripeLoc.Y
+		inSamplWidth: inSampl.Width
+		inSamplHeight: inSampl.Height
+		outBox: con_04275250_03ec_421b_897b_db42096f8942
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: inSampl
+		inSearchRegion: con_04275250_03ec_421b_897b_db42096f8942
+		inSearchRegionAlignment: Nil
+		inGrayModel: StripeModel_SingleCam
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.400000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin: Nil
+		outObject.Match.Origin.X: con_46148853_a97e_4413_96c1_8e3cbc32ce2c
+		outObject.Match.Origin.Y: con_9e8f4219_b245_431d_ac14_7a860ac51706
+		outObject.Match.Width: con_fd181ece_119d_4c14_bfce_d1bf6206f293
+		outObject.Match.Height: con_b9234ff6_448d_4900_ac2c_fa429c798ad6
+		outObject.Alignment: Nil
+		outObject.Alignment.Scale: Nil
+		outObject.Scale: Nil
+		outObject.Score: Nil
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSampleMatchHeight
+		Path outScanPointPath = "Path({Point2D(inSamplStripeLocX-50, inSamplStripeLocY+inSampleMatchHeight/2), Point2D(inSamplStripeLocX+60, inSamplStripeLocY+inSampleMatchHeight/2)})"
+	}
+	(
+		inSamplStripeLocX: con_46148853_a97e_4413_96c1_8e3cbc32ce2c
+		inSamplStripeLocY: con_9e8f4219_b245_431d_ac14_7a860ac51706
+		inSampleMatchHeight: con_b9234ff6_448d_4900_ac2c_fa429c798ad6
+		outScanPointPath: con_2a8bff01_066e_491b_8e44_0d14ef843c89
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: inSampl
+		inScanPath: con_2a8bff01_066e_491b_8e44_0d14ef843c89
+		inScanPathAlignment: Nil
+		inScanWidth: 10
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: NearestNeighbour
+				SamplingStep: 2.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 1.000000
+				MinMagnitude: 20.000000
+				EdgeTransition: DarkToBright
+			)
+		inEdgeSelection: Best
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_289cd2e9_ed3c_4759_8854_66acac65a47c
+		outEdge.Point.Y: con_1fba2624_d959_491c_8a19_f5c271d08cd1
+		outEdge.Magnitude: Nil
+	)
+
+	//dodanie szukania drugiego koñca template 
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inSamplStripeLocX
+		Integer inSamplStripeLocY
+		Integer inSampleMatchHeight
+		Integer inSamplMatchWidth
+		Path outScanPointPath = "Path({Point2D(inSamplStripeLocX - 80 + inSamplMatchWidth, inSamplStripeLocY+inSampleMatchHeight/2), Point2D(inSamplStripeLocX+80 + inSamplMatchWidth, inSamplStripeLocY+inSampleMatchHeight/2)})"
+	}
+	(
+		inSamplStripeLocX: con_46148853_a97e_4413_96c1_8e3cbc32ce2c
+		inSamplStripeLocY: con_9e8f4219_b245_431d_ac14_7a860ac51706
+		inSampleMatchHeight: con_b9234ff6_448d_4900_ac2c_fa429c798ad6
+		inSamplMatchWidth: con_fd181ece_119d_4c14_bfce_d1bf6206f293
+		outScanPointPath: con_ab75ab4e_7cf7_492d_832b_8b44b39480a4
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: inSampl
+		inScanPath: con_ab75ab4e_7cf7_492d_832b_8b44b39480a4
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams: SamplingParams()
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 1.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: DarkToBright
+			)
+		inEdgeSelection: Best
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_aee7dba3_9445_4c6f_9c3c_ea93b4d6c368
+		outEdge.Point.Y: con_6e60f91e_3953_4953_b50c_44dd4d634f0b
+		outEdge.Magnitude: Nil
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inPointX
+		Integer inPointY
+		Integer inSampleMatchHeight
+		Integer inDeltaX
+		Path outScanPointPath = "Path({Point2D(inPointX-inDeltaX, inPointY+inSampleMatchHeight), Point2D(inPointX-inDeltaX, inPointY-inSampleMatchHeight)})"
+	}
+	(
+		inPointX: con_289cd2e9_ed3c_4759_8854_66acac65a47c
+		inPointY: con_1fba2624_d959_491c_8a19_f5c271d08cd1
+		inSampleMatchHeight: con_b9234ff6_448d_4900_ac2c_fa429c798ad6
+		inDeltaX: 15
+		outScanPointPath: con_e542c396_7210_4487_b36a_19a94c1485c8
+	)
+
+	//Formuła wymaga rozwinięcia - na razie uwzględnia istnienie tylko lewej części obrazu wstęgi - pytanie co z prawą? osobny wzorzec? można podać jakąś daną wejściową razem z klatką, bo wiemy z jakiej kamery pochodzi i dodać jakiś offset
+	//
+	//do przemyślenia
+	//:EXPLICITTYPE[outScanPointPath] true
+	expression
+	{
+		Integer inPointX
+		Integer inPointY
+		Integer inSampleMatchHeight
+		Integer inDeltaX
+		Path outScanPointPath = "Path({Point2D(inPointX-inDeltaX, inPointY+inSampleMatchHeight), Point2D(inPointX-inDeltaX, inPointY-inSampleMatchHeight)})"
+	}
+	(
+		inPointX: con_aee7dba3_9445_4c6f_9c3c_ea93b4d6c368
+		inPointY: con_6e60f91e_3953_4953_b50c_44dd4d634f0b
+		inSampleMatchHeight: con_b9234ff6_448d_4900_ac2c_fa429c798ad6
+		inDeltaX: 15
+		outScanPointPath: con_e5eacfeb_fa1f_41c6_823e_391e7865ff48
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inStripeScanParams] TRUE
+	//:HIDDENPORT[inStripeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleStripe
+	(
+		inImage: inSampl
+		inScanPath: con_e542c396_7210_4487_b36a_19a94c1485c8
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams: SamplingParams()
+		inStripeScanParams:
+			StripeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.600000
+				MinMagnitude: 5.000000
+				MaxInnerEdgeMagnitude: Nil
+				StripePolarity: Dark
+				MinStripeWidth: 0.000000
+				MaxStripeWidth: Nil
+			)
+		inStripeSelection: Best
+		inLocalBlindness: Nil
+		outStripe: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outStripe.Width: Nil
+		outStripe.Center: Nil
+		outStripe.Center.X: con_ab1ba529_b2bf_4729_9ce0_072fdda0a13d
+		outStripe.Center.Y: con_b928eeda_20c4_4d0d_983a_ae1f1568d356
+	)
+
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inStripeScanParams] TRUE
+	//:HIDDENPORT[inStripeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleStripe
+	(
+		inImage: inSampl
+		inScanPath: con_e5eacfeb_fa1f_41c6_823e_391e7865ff48
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams: SamplingParams()
+		inStripeScanParams:
+			StripeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.600000
+				MinMagnitude: 5.000000
+				MaxInnerEdgeMagnitude: Nil
+				StripePolarity: Dark
+				MinStripeWidth: 0.000000
+				MaxStripeWidth: Nil
+			)
+		inStripeSelection: Best
+		inLocalBlindness: Nil
+		outStripe: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outStripe.Width: Nil
+		outStripe.Center: Nil
+		outStripe.Center.X: con_c6d8fb68_8ed2_4766_bb04_621cea2ce626
+		outStripe.Center.Y: con_e3657bec_7102_4dc6_b86a_acd70366aaa9
+	)
+
+	expression
+	{
+		Real inPoint1X
+		Real inPoint1Y
+		Real inPoint2X
+		Real inPoint2Y
+		Real inShear
+		Real outShearAngleTgAbsolue = "(inPoint2Y-inPoint1Y)/(inPoint2X-inPoint1X)-inShear"
+		Real outShearAngleTgUpdate = "(inPoint2Y-inPoint1Y)/(inPoint2X-inPoint1X)"
+	}
+	(
+		inPoint1X: con_ab1ba529_b2bf_4729_9ce0_072fdda0a13d
+		inPoint1Y: con_b928eeda_20c4_4d0d_983a_ae1f1568d356
+		inPoint2X: con_c6d8fb68_8ed2_4766_bb04_621cea2ce626
+		inPoint2Y: con_e3657bec_7102_4dc6_b86a_acd70366aaa9
+		inShear: inShear
+		outShearAngleTgAbsolue: con_40c29fd9_2dbd_4ea8_9f9e_169313e72ffa
+		outShearAngleTgUpdate: con_d45e71bb_9c24_454c_98a2_1e30ed2476bb
+	)
+
+	outShearUpdate = con_d45e71bb_9c24_454c_98a2_1e30ed2476bb
+
+	outShearAbsolute = con_40c29fd9_2dbd_4ea8_9f9e_169313e72ffa
+}
+
+public __CheckEntireSampl_Left(Image inFrameLeft, Bool outHasEntireSampl, Image? outSampl) step
+	expand inFrameLeft.Width
+	expand inFrameLeft.Height
+{
+	__ConvertLabToMono
+	(
+		inImg: inFrameLeft
+		outMonoImg: con_2cca3921_07e5_47c2_bec4_5e02f84c3edd
+	)
+
+	//:HIDDENPORT[inProjectionDirection] TRUE
+	//:HIDDENPORT[inProjectionMode] TRUE
+	ImageProjection
+	(
+		inImage: con_2cca3921_07e5_47c2_bec4_5e02f84c3edd
+		inRoi: Nil
+		inProjectionDirection: Vertical
+		inProjectionMode: Average
+		outProfile: con_4d839772_488b_42cb_8fab_f4a966bfa596
+	)
+
+	//:HIDDENPORT[inStdDev] TRUE
+	//:HIDDENPORT[inKernelRelativeSize] TRUE
+	//:HIDDENPORT[inCyclic] TRUE
+	SmoothProfile_Gauss
+	(
+		inProfile: con_4d839772_488b_42cb_8fab_f4a966bfa596
+		inRange: Nil
+		inStdDev: 50.000000
+		inKernelRelativeSize: 3.000000
+		inCyclic: False
+		outProfile: con_6947205f_1c36_426b_8138_e9a5ac01328d
+	)
+
+	//:HIDDENPORT[inCyclic] TRUE
+	//:HIDDENPORT[inDifferentiationMethod] TRUE
+	DifferentiateProfile
+	(
+		inProfile: con_6947205f_1c36_426b_8138_e9a5ac01328d
+		inCyclic: False
+		inDifferentiationMethod: Central
+		outDerivative: con_85ca01ff_baa7_4e85_8767_2a48e500f6aa
+	)
+
+	//:HIDDENPORT[inCyclic] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inMinDistance] TRUE
+	//:HIDDENPORT[inMaxDistance] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	ProfileEdges
+	(
+		inProfile: con_85ca01ff_baa7_4e85_8767_2a48e500f6aa
+		inRange: Nil
+		inCyclic: False
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.000000
+				MinMagnitude: 0.005000
+				EdgeTransition: DarkToBright
+			)
+		inMinDistance: 100.000000
+		inMaxDistance: Nil
+		inLocalBlindness: Nil
+		outEdges: Nil
+		outDistances: Nil
+		diagResponseProfile: Nil
+		outEdges.Point: con_03089f69_914e_4f48_99c9_b81519449add
+	)
+
+	//:HIDDENPORT[inInverse] TRUE
+	GetArrayElement_OrNil<Integer>
+	(
+		inArray: con_03089f69_914e_4f48_99c9_b81519449add
+		inIndex: 0
+		inInverse: False
+		outConditionalValue: con_e6276202_881f_4abd_9e39_81bc80685bd5
+	)
+
+	parameters read
+	{
+		outputs: StripeModel_SingleCam, StripeModel, Templ_Left, TemplStripeLoc_Left
+	}
+	(
+		outStripeModel_SingleCam: Nil
+		outStripeModel: con_06ad5237_3b70_4636_8b7e_91c00f51003c
+		outTempl_Left: Nil
+		outTemplStripeLoc_Left: Nil
+		outTempl_Left.Width: Nil
+		outTempl_Left.Height: con_f69cb01c_a9cd_4593_85b7_a35e79b38ab1
+		outTemplStripeLoc_Left.X: Nil
+		outTemplStripeLoc_Left.Y: con_d3b5ac30_146b_416c_8489_35ef296d8c9c
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_2cca3921_07e5_47c2_bec4_5e02f84c3edd
+		inSearchRegion: Nil
+		inSearchRegionAlignment: Nil
+		inGrayModel: con_06ad5237_3b70_4636_8b7e_91c00f51003c
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.100000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin.X: con_86a2b84a_ae73_475b_8e66_8497627beeea
+		outObject.Match.Origin.Y: con_73796e7f_ed72_48a0_995a_f8cb79023546
+		outObject.Alignment: con_1d6fdb13_b1be_4a62_845a_1823a51ff315
+		outObject.Score: Nil
+	)
+
+	//:EXPLICITTYPE[outHasFullSampl] true
+	//:EXPLICITTYPE[outCrop] true
+	expression
+	{
+		Real inTemplStripeY
+		Integer inTemplH
+		Real inFrameStripeY
+		Integer inFrameH
+		Real inFrameStripeX
+		Integer inFrameW
+		Integer? inSamplEdgeLeft
+		Bool outHasFullSampl = "inFrameStripeY + 20 >= inTemplStripeY and inFrameH - inFrameStripeY + 20 >= inTemplH - inTemplStripeY"
+		Box? outCrop = "outHasFullSampl? Box(inSamplEdgeLeft, integer(inFrameStripeY-inTemplStripeY), inFrameW-inSamplEdgeLeft, inTemplH) : Nil"
+	}
+	(
+		inTemplStripeY: con_d3b5ac30_146b_416c_8489_35ef296d8c9c
+		inTemplH: con_f69cb01c_a9cd_4593_85b7_a35e79b38ab1
+		inFrameStripeY: con_73796e7f_ed72_48a0_995a_f8cb79023546
+		inFrameH: inFrameLeft.Height
+		inFrameStripeX: con_86a2b84a_ae73_475b_8e66_8497627beeea
+		inFrameW: inFrameLeft.Width
+		inSamplEdgeLeft: con_e6276202_881f_4abd_9e39_81bc80685bd5
+		outHasFullSampl: con_1e8837dc_8f19_4fa6_80a3_8add726c3e9d
+		outCrop: con_d62075a3_0a31_4ac5_bd58_1c9fa44b330f
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inFrameLeft
+		inSelection: con_d62075a3_0a31_4ac5_bd58_1c9fa44b330f
+		inBorderColor: Pixel()
+		outImage: con_6f889826_4c2a_470d_be23_fa5c14ed08b9
+	)
+
+	//:BGIMAGE[inRectangle] @macroInput:inFrameLeft
+	//:COORDINATESYSTEM[inRectangle] @input:inRectangleAlignment
+	CreateRectangleRegion
+	(
+		inRectangle:
+			Rectangle2D
+			(
+				Origin:
+					Point2D
+					(
+						X: -3971.470703
+						Y: 2.842281
+					)
+				Angle: 0.000000
+				Width: 10258.662109
+				Height: 41.784790
+			)
+		inRectangleAlignment: con_1d6fdb13_b1be_4a62_845a_1823a51ff315
+		inFrameWidth: inFrameLeft.Width
+		inFrameHeight: inFrameLeft.Height
+		outRegion: con_9e4df170_5dcf_48a9_8103_bd646f6c440e
+		outAlignedRectangle: Nil
+	)
+
+	RegionComplement
+	(
+		inRegion: con_9e4df170_5dcf_48a9_8103_bd646f6c440e
+		outRegion: con_9ee70143_e85a_46b5_ac5d_981c6ad5e73d
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMinDistance] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObjects] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateMultipleObjects_NCC
+	(
+		inImage: con_2cca3921_07e5_47c2_bec4_5e02f84c3edd
+		inSearchRegion: con_9ee70143_e85a_46b5_ac5d_981c6ad5e73d
+		inSearchRegionAlignment: Nil
+		inGrayModel: con_06ad5237_3b70_4636_8b7e_91c00f51003c
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.400000
+		inMinDistance: 20.000000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObjects: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObjects.Count: con_7875ce3d_9757_43e8_b126_24b9a6628a3a
+		outObjects.Match: Nil
+		outObjects.Match.Origin.X: Nil
+		outObjects.Match.Origin.Y: Nil
+		outObjects.Alignment: Nil
+		outObjects.Score: Nil
+	)
+
+	//:EXPLICITTYPE[outIsFullAndNotBroken] true
+	expression
+	{
+		Bool inHasFullSampl
+		Integer inStripeCount
+		Bool outIsFullAndNotBroken = "inHasFullSampl and inStripeCount<>0"
+	}
+	(
+		inHasFullSampl: con_1e8837dc_8f19_4fa6_80a3_8add726c3e9d
+		inStripeCount: con_7875ce3d_9757_43e8_b126_24b9a6628a3a
+		outIsFullAndNotBroken: con_b1f63ece_e59b_47fe_9e24_15aee4501b36
+	)
+
+	MergeDefault<Bool>
+	(
+		inConditionalObject: con_b1f63ece_e59b_47fe_9e24_15aee4501b36
+		inDefaultObject: False
+		outObject: con_b7a15185_2156_457a_bfb0_a63db030bdd1
+	)
+
+	outHasEntireSampl = con_b7a15185_2156_457a_bfb0_a63db030bdd1
+
+	outSampl = con_6f889826_4c2a_470d_be23_fa5c14ed08b9
+}
+
+public _1_GetEntireSamplesPair(Image inFrameLeft, Image inFrameRight, Bool outPairReady, Image? outSamplLeft, Image? outSamplRight) step
+{
+	__CheckEntireSampl_Left
+	(
+		inFrameLeft: inFrameLeft
+		outHasEntireSampl: con_be183d69_85ac_4bba_8fb0_fcb9d1f38a74
+		outSampl: con_380c7c55_2dea_4b01_8751_8b3ef4d50849
+	)
+
+	parameters write
+	{
+		inputs: Sampl_Left
+	}
+	(
+		inSampl_Left: con_380c7c55_2dea_4b01_8751_8b3ef4d50849
+	)
+
+	__CheckEntireSampl_Right
+	(
+		inFrameRight: inFrameRight
+		outHasEntireSampl: con_943ab9f8_05d9_48ca_b8b1_b2a72016b1df
+		outSampl: con_98e8dddf_34fb_4f37_8107_9dd2f819653a
+	)
+
+	parameters write
+	{
+		inputs: Sampl_Right
+	}
+	(
+		inSampl_Right: con_98e8dddf_34fb_4f37_8107_9dd2f819653a
+	)
+
+	parameters read
+	{
+		outputs: SamplLeftReady, SamplRightReady, Sampl_Left, Sampl_Right
+	}
+	(
+		outSamplLeftReady: con_dca80c1d_a15c_47b1_acfe_8059852393aa
+		outSamplRightReady: con_9a7659f5_2fff_4bab_bf32_66e2b28988ae
+		outSampl_Left: con_66371a25_71f2_451c_99b1_2a6d7745ff40
+		outSampl_Right: con_829bfb68_9a17_435a_b179_36f8275e953e
+	)
+
+	//:EXPLICITTYPE[outPairReady] true
+	//:EXPLICITTYPE[outSamplLeft] true
+	//:EXPLICITTYPE[outSamplRight] true
+	//:EXPLICITTYPE[outSamplLeftReady] true
+	//:EXPLICITTYPE[outSamplRightReady] true
+	expression
+	{
+		Bool inSamplLeftReady
+		Bool inSamplRightReady
+		Bool inHasEntireSamplLeft
+		Bool inHasEntireSamplRight
+		Image inSampl_Left
+		Image inSampl_Right
+		Bool outPairReady = "(inHasEntireSamplLeft or inSamplLeftReady) and (inHasEntireSamplRight or inSamplRightReady)"
+		Image? outSamplLeft = "outPairReady? inSampl_Left : Nil"
+		Image? outSamplRight = "outPairReady? inSampl_Right : Nil"
+		Bool? outSamplLeftReady = "outPairReady? False : inSamplLeftReady? Nil : inHasEntireSamplLeft"
+		Bool? outSamplRightReady = "outPairReady? False : inSamplRightReady? Nil : inHasEntireSamplRight"
+	}
+	(
+		inSamplLeftReady: con_dca80c1d_a15c_47b1_acfe_8059852393aa
+		inSamplRightReady: con_9a7659f5_2fff_4bab_bf32_66e2b28988ae
+		inHasEntireSamplLeft: con_be183d69_85ac_4bba_8fb0_fcb9d1f38a74
+		inHasEntireSamplRight: con_943ab9f8_05d9_48ca_b8b1_b2a72016b1df
+		inSampl_Left: con_66371a25_71f2_451c_99b1_2a6d7745ff40
+		inSampl_Right: con_829bfb68_9a17_435a_b179_36f8275e953e
+		outPairReady: con_9145e118_c650_4b06_89d6_3d00316bb523
+		outSamplLeft: con_c1deef36_c5d5_48c1_8cfe_6f35adc77549
+		outSamplRight: con_ce5abe64_a169_4e40_80bc_6cfe102f2a48
+		outSamplLeftReady: con_66e27951_c46e_4ce9_a3ec_5b9919b2ba80
+		outSamplRightReady: con_c1f49d81_7104_487e_847e_db6afdbf0744
+	)
+
+	parameters write
+	{
+		inputs: SamplLeftReady, SamplRightReady
+	}
+	(
+		inSamplLeftReady: con_66e27951_c46e_4ce9_a3ec_5b9919b2ba80
+		inSamplRightReady: con_c1f49d81_7104_487e_847e_db6afdbf0744
+	)
+
+	outPairReady = con_9145e118_c650_4b06_89d6_3d00316bb523
+
+	outSamplLeft = con_c1deef36_c5d5_48c1_8cfe_6f35adc77549
+
+	outSamplRight = con_ce5abe64_a169_4e40_80bc_6cfe102f2a48
+}
+
+public __CheckEntireSampl_Right(Image inFrameRight, Bool outHasEntireSampl, Image? outSampl) step
+	expand inFrameRight.Width
+	expand inFrameRight.Height
+{
+	__ConvertLabToMono
+	(
+		inImg: inFrameRight
+		outMonoImg: con_b4db5d77_9134_4515_b470_ba057a2556ac
+	)
+
+	//:HIDDENPORT[inProjectionDirection] TRUE
+	//:HIDDENPORT[inProjectionMode] TRUE
+	ImageProjection
+	(
+		inImage: con_b4db5d77_9134_4515_b470_ba057a2556ac
+		inRoi: Nil
+		inProjectionDirection: Vertical
+		inProjectionMode: Average
+		outProfile: con_41754c1f_5b92_4ec3_8d45_c01d14d0e373
+	)
+
+	//:HIDDENPORT[inStdDev] TRUE
+	//:HIDDENPORT[inKernelRelativeSize] TRUE
+	//:HIDDENPORT[inCyclic] TRUE
+	SmoothProfile_Gauss
+	(
+		inProfile: con_41754c1f_5b92_4ec3_8d45_c01d14d0e373
+		inRange: Nil
+		inStdDev: 50.000000
+		inKernelRelativeSize: 3.000000
+		inCyclic: False
+		outProfile: con_e6064b5f_30f0_4622_8c0c_422ad0f95676
+	)
+
+	//:HIDDENPORT[inCyclic] TRUE
+	//:HIDDENPORT[inDifferentiationMethod] TRUE
+	DifferentiateProfile
+	(
+		inProfile: con_e6064b5f_30f0_4622_8c0c_422ad0f95676
+		inCyclic: False
+		inDifferentiationMethod: Central
+		outDerivative: con_f6bff79d_681b_4a10_8da2_ddd6d740b277
+	)
+
+	//:HIDDENPORT[inCyclic] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inMinDistance] TRUE
+	//:HIDDENPORT[inMaxDistance] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	ProfileEdges
+	(
+		inProfile: con_f6bff79d_681b_4a10_8da2_ddd6d740b277
+		inRange: Nil
+		inCyclic: False
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.000000
+				MinMagnitude: 0.010000
+				EdgeTransition: Any
+			)
+		inMinDistance: 100.000000
+		inMaxDistance: Nil
+		inLocalBlindness: Nil
+		outEdges: Nil
+		outDistances: Nil
+		diagResponseProfile: Nil
+		outEdges.Point: con_c5463e6c_b71f_4d01_ad54_301f3a2487bd
+	)
+
+	GetArrayElement_OrNil<Integer>
+	(
+		inArray: con_c5463e6c_b71f_4d01_ad54_301f3a2487bd
+		inIndex: 0
+		inInverse: True
+		outConditionalValue: con_0897a767_5f71_4369_8b61_d57210046b6d
+	)
+
+	parameters read
+	{
+		outputs: StripeModel_SingleCam, TemplStripeLoc_Right, Templ_Right
+	}
+	(
+		outStripeModel_SingleCam: con_cfcce6db_d2f8_497d_b779_b5c0eef1e4dc
+		outTemplStripeLoc_Right: Nil
+		outTempl_Right: con_edde3852_03a3_4f32_82cc_a539011b8500
+		outTemplStripeLoc_Right.X: Nil
+		outTemplStripeLoc_Right.Y: con_7ab7bc04_2fda_4b2e_ae9b_c039dce038a2
+		outTempl_Right.Width: Nil
+		outTempl_Right.Height: con_eaeb3099_88b8_4d28_bcc2_d034392d1bc6
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObject] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateSingleObject_NCC
+	(
+		inImage: con_b4db5d77_9134_4515_b470_ba057a2556ac
+		inSearchRegion: Nil
+		inSearchRegionAlignment: Nil
+		inGrayModel: con_cfcce6db_d2f8_497d_b779_b5c0eef1e4dc
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.200000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObject: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObject.Match: Nil
+		outObject.Match.Origin.X: con_bc01ecc0_521b_4aff_b9a5_2c0c7dc0a292
+		outObject.Match.Origin.Y: con_1fa70e83_13db_496f_97d1_c0b327599909
+		outObject.Alignment: con_14f05c89_0551_4edf_a443_87a7c247baec
+		outObject.Score: Nil
+	)
+
+	//:EXPLICITTYPE[outHasFullSampl] true
+	//:EXPLICITTYPE[outCrop] true
+	expression
+	{
+		Real inTemplStripeY
+		Integer inTemplH
+		Real inFrameStripeY
+		Integer inFrameH
+		Real inFrameStripeX
+		Integer inFrameW
+		Integer? inSamplEdgeRight
+		Bool outHasFullSampl = "inFrameStripeY >= inTemplStripeY and inFrameH - inFrameStripeY >= inTemplH - inTemplStripeY"
+		Box? outCrop = "outHasFullSampl? Box(0, integer(inFrameStripeY-inTemplStripeY), inSamplEdgeRight, inTemplH) : Nil"
+	}
+	(
+		inTemplStripeY: con_7ab7bc04_2fda_4b2e_ae9b_c039dce038a2
+		inTemplH: con_eaeb3099_88b8_4d28_bcc2_d034392d1bc6
+		inFrameStripeY: con_1fa70e83_13db_496f_97d1_c0b327599909
+		inFrameH: inFrameRight.Height
+		inFrameStripeX: con_bc01ecc0_521b_4aff_b9a5_2c0c7dc0a292
+		inFrameW: inFrameRight.Width
+		inSamplEdgeRight: con_0897a767_5f71_4369_8b61_d57210046b6d
+		outHasFullSampl: con_62168ad7_b594_4330_bd67_88305e58674c
+		outCrop: con_58824478_8b60_461c_a390_d7c858e673ed
+	)
+
+	//:BGIMAGE[inRectangle] con_edde3852_03a3_4f32_82cc_a539011b8500
+	//:COORDINATESYSTEM[inRectangle] @input:inRectangleAlignment
+	CreateRectangleRegion
+	(
+		inRectangle:
+			Rectangle2D
+			(
+				Origin:
+					Point2D
+					(
+						X: -3971.470703
+						Y: 2.842281
+					)
+				Angle: 0.000000
+				Width: 10258.662109
+				Height: 41.784790
+			)
+		inRectangleAlignment: con_14f05c89_0551_4edf_a443_87a7c247baec
+		inFrameWidth: inFrameRight.Width
+		inFrameHeight: inFrameRight.Height
+		outRegion: con_a7930bd3_793a_4615_b4c3_7542884cbcc3
+		outAlignedRectangle: Nil
+	)
+
+	RegionComplement
+	(
+		inRegion: con_a7930bd3_793a_4615_b4c3_7542884cbcc3
+		outRegion: con_85d30289_3717_4ec8_a4ee_c62469e397b3
+	)
+
+	//:HIDDENPORT[inMinPyramidLevel] TRUE
+	//:HIDDENPORT[inMaxPyramidLevel] TRUE
+	//:HIDDENPORT[inIgnoreBoundaryObjects] TRUE
+	//:HIDDENPORT[inMinScore] TRUE
+	//:HIDDENPORT[inMinDistance] TRUE
+	//:HIDDENPORT[inMaxBrightnessRatio] TRUE
+	//:HIDDENPORT[inMaxContrastRatio] TRUE
+	//:HIDDENPORT[outObjects] TRUE
+	//:HIDDENPORT[outPyramidHeight] TRUE
+	//:HIDDENPORT[diagMatchPyramid] TRUE
+	LocateMultipleObjects_NCC
+	(
+		inImage: con_b4db5d77_9134_4515_b470_ba057a2556ac
+		inSearchRegion: con_85d30289_3717_4ec8_a4ee_c62469e397b3
+		inSearchRegionAlignment: Nil
+		inGrayModel: con_cfcce6db_d2f8_497d_b779_b5c0eef1e4dc
+		inMinPyramidLevel: 1
+		inMaxPyramidLevel: Nil
+		inIgnoreBoundaryObjects: False
+		inMinScore: 0.500000
+		inMinDistance: 10.000000
+		inMaxBrightnessRatio: Nil
+		inMaxContrastRatio: Nil
+		outObjects: Nil
+		outPyramidHeight: Nil
+		outAlignedSearchRegion: Nil
+		diagImagePyramid: Nil
+		diagMatchPyramid: Nil
+		diagScores: Nil
+		outObjects.Count: con_0a99262b_0b6a_4aac_be2a_04e40894e07f
+		outObjects.Match: Nil
+		outObjects.Match.Origin.X: Nil
+		outObjects.Match.Origin.Y: Nil
+		outObjects.Alignment: Nil
+		outObjects.Score: Nil
+	)
+
+	//:EXPLICITTYPE[outIsFullAndNotBroken] true
+	expression
+	{
+		Bool inHasFullSampl
+		Integer inStripeCount
+		Bool outIsFullAndNotBroken = "inHasFullSampl and inStripeCount == 0"
+	}
+	(
+		inHasFullSampl: con_62168ad7_b594_4330_bd67_88305e58674c
+		inStripeCount: con_0a99262b_0b6a_4aac_be2a_04e40894e07f
+		outIsFullAndNotBroken: con_2a1df864_7a21_4346_b5b6_967898e88c7c
+	)
+
+	MergeDefault<Bool>
+	(
+		inConditionalObject: con_2a1df864_7a21_4346_b5b6_967898e88c7c
+		inDefaultObject: False
+		outObject: con_b7a15185_2156_457a_bfb0_a63db030bdd1
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inFrameRight
+		inSelection: con_58824478_8b60_461c_a390_d7c858e673ed
+		inBorderColor: Pixel()
+		outImage: con_6f889826_4c2a_470d_be23_fa5c14ed08b9
+	)
+
+	outHasEntireSampl = con_b7a15185_2156_457a_bfb0_a63db030bdd1
+
+	outSampl = con_6f889826_4c2a_470d_be23_fa5c14ed08b9
+}
+
+public __ConvertLabToMono(Image inImg, Image outMonoImg) step
+{
+	//:HIDDENPORT[inChannelIndex] TRUE
+	SelectChannel
+	(
+		inImage: inImg
+		inRoi: Nil
+		inChannelIndex: 0
+		outImage: con_8f1d03f4_5296_4381_8e3d_cd1450f88f57
+	)
+
+	ConvertPixelType
+	(
+		inImage: con_8f1d03f4_5296_4381_8e3d_cd1450f88f57
+		inRoi: Nil
+		inNewType: Real
+		inDepthDelta: 0
+		outImage: con_27a3317d_c0e6_415d_8f8c_b0e5918f57ed
+	)
+
+	DivideImage
+	(
+		inImage: con_27a3317d_c0e6_415d_8f8c_b0e5918f57ed
+		inRoi: Nil
+		inValue: 2.560000
+		outImage: con_e7c6d94c_94a2_4207_81b4_1883a502d43c
+	)
+
+	PowerImage
+	(
+		inImage: con_e7c6d94c_94a2_4207_81b4_1883a502d43c
+		inRoi: Nil
+		inValue: 2.000000
+		outImage: con_2a8763bd_129f_4a45_8532_e40b08b1a866
+	)
+
+	//:HIDDENPORT[inA] TRUE
+	//:HIDDENPORT[inB] TRUE
+	RescalePixels
+	(
+		inImage: con_2a8763bd_129f_4a45_8532_e40b08b1a866
+		inRoi: Nil
+		inA: 0.026000
+		inB: 0.000000
+		outImage: con_fc6b07cb_01ee_4c84_aaa7_618e4443c643
+	)
+
+	//:HIDDENPORT[inA] TRUE
+	//:HIDDENPORT[inB] TRUE
+	RescalePixels
+	(
+		inImage: con_e7c6d94c_94a2_4207_81b4_1883a502d43c
+		inRoi: Nil
+		inA: -0.299000
+		inB: 6.639000
+		outImage: con_a8556a37_7653_4bf5_babb_e48555193b25
+	)
+
+	AddImages
+	(
+		inImage1: con_fc6b07cb_01ee_4c84_aaa7_618e4443c643
+		inImage2: con_a8556a37_7653_4bf5_babb_e48555193b25
+		inRoi: Nil
+		inScale: 1.000000
+		outImage: con_449a8ac9_e79d_4ed3_9ed3_ebe1feca300f
+	)
+
+	ConvertPixelType
+	(
+		inImage: con_449a8ac9_e79d_4ed3_9ed3_ebe1feca300f
+		inRoi: Nil
+		inNewType: UInt8
+		inDepthDelta: 0
+		outImage: con_8cf05485_0369_48b7_a913_ca88f52bf4aa
+	)
+
+	outMonoImg = con_8cf05485_0369_48b7_a913_ca88f52bf4aa
+}
+
+public _X_CropBleeds(Image inTempl, Image outTempl) step
+	expand inTempl.Height
+{
+	__ConvertLabToMono
+	(
+		inImg: inTempl
+		outMonoImg: con_2776e55b_2d3b_4644_b769_a8fadad80281
+	)
+
+	//:BGIMAGE[inScanPath] @input:inImage
+	//:COORDINATESYSTEM[inScanPath] @input:inScanPathAlignment
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: con_2776e55b_2d3b_4644_b769_a8fadad80281
+		inScanPath: Path<color_morph.d69ebdbe.Path.avdata>
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: Bilinear
+				SamplingStep: 5.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: Any
+			)
+		inEdgeSelection: First
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_9e136cfa_04b6_4ef0_accb_2284b4f7e727
+		outEdge.Magnitude: Nil
+	)
+
+	//:BGIMAGE[inScanPath] @input:inImage
+	//:COORDINATESYSTEM[inScanPath] @input:inScanPathAlignment
+	//:HIDDENPORT[inScanWidth] TRUE
+	//:HIDDENPORT[inSamplingParams] TRUE
+	//:HIDDENPORT[inEdgeScanParams] TRUE
+	//:HIDDENPORT[inEdgeSelection] TRUE
+	//:HIDDENPORT[inLocalBlindness] TRUE
+	//:HIDDENPORT[outEdge] TRUE
+	//:HIDDENPORT[diagSamplingPoints] TRUE
+	//:HIDDENPORT[diagSamplingStep] TRUE
+	ScanSingleEdge
+	(
+		inImage: con_2776e55b_2d3b_4644_b769_a8fadad80281
+		inScanPath: Path<color_morph.bc811825.Path.avdata>
+		inScanPathAlignment: Nil
+		inScanWidth: 5
+		inSamplingParams:
+			SamplingParams
+			(
+				Interpolation: Bilinear
+				SamplingStep: 5.000000
+				SampleCount: Nil
+			)
+		inEdgeScanParams:
+			EdgeScanParams
+			(
+				ProfileInterpolation: Quadratic4
+				SmoothingStdDev: 0.000000
+				MinMagnitude: 5.000000
+				EdgeTransition: Any
+			)
+		inEdgeSelection: First
+		inLocalBlindness: Nil
+		outEdge: Nil
+		outAlignedScanPath: Nil
+		diagBrightnessProfile: Nil
+		diagResponseProfile: Nil
+		diagSamplingPoints: Nil
+		diagSamplingStep: Nil
+		outEdge.Point: Nil
+		outEdge.Point.X: con_2d6597ea_005b_49b7_af11_2fec0d425d59
+		outEdge.Magnitude: Nil
+	)
+
+	SubtractReals
+	(
+		inA: con_2d6597ea_005b_49b7_af11_2fec0d425d59
+		inB: con_9e136cfa_04b6_4ef0_accb_2284b4f7e727
+		outDifference: con_640f7244_63c7_4a9d_8f86_0ccf749eace6
+	)
+
+	//:HIDDENPORT[inBorderColor] TRUE
+	CropImage
+	(
+		inImage: inTempl
+		inBorderColor: Pixel()
+		inSelection.X: con_9e136cfa_04b6_4ef0_accb_2284b4f7e727
+		inSelection.Y: 0
+		inSelection.Width: con_640f7244_63c7_4a9d_8f86_0ccf749eace6
+		inSelection.Height: inTempl.Height
+		outImage: con_24d0d62a_8156_4577_9c19_95ae65f9debd
+	)
+
+	MergeDefault<Image>
+	(
+		inConditionalObject: con_24d0d62a_8156_4577_9c19_95ae65f9debd
+		inDefaultObject: inTempl
+		outObject: con_07490cc6_2648_4145_839e_a9b5d4917e74
+	)
+
+	outTempl = con_07490cc6_2648_4145_839e_a9b5d4917e74
+}
+

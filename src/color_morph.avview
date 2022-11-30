@@ -1,0 +1,86 @@
+﻿<ViewSets Current="Custom1">
+  <ViewSet Name="Custom1">
+    <HSplit>
+      <VSplit>
+        <Views Width="0.498" Height="0.478">
+          <View Type="ImageView">
+            <Output Name="con_22ad74cf_b60e_4948_ae63_e5cd5ea212ed" Macro="_0_Init" Start="Main" Instance="0" />
+            <ViewState>
+              <ViewOptions ShowInfo="False" CollapseInfo="False" ShowIndices="False" />
+            </ViewState>
+          </View>
+          <View Type="TextView">
+            <Output Name="con_73ff2c94_794e_4840_9c04_c06bf7b41341" Macro="Main" Start="Main" Instance="0" />
+            <Output Name="con_04ef8ae3_e857_485d_b2c0_67e0b28bba54" Macro="Main" Start="Main" Instance="0" />
+            <Input Name="inFile" Index="6" Section="Process" Macro="Main" Start="Main" Instance="0" />
+          </View>
+        </Views>
+        <Views Width="0.494" Height="0.478">
+          <View Type="ImageView">
+            <Output Name="con_fafd2bb3_8667_4588_94c7_c16e8dcb1fca" Macro="_0_Init" Start="Main" Instance="0" />
+            <ViewState>
+              <ViewOptions ShowInfo="False" CollapseInfo="False" ShowIndices="False" />
+            </ViewState>
+          </View>
+        </Views>
+      </VSplit>
+      <VSplit>
+        <Views Width="0.520" Height="0.512">
+          <View Type="ImageView">
+            <Output Name="con_72d2e24a_e097_4d3a_aecd_3b996a18c12d" Macro="_1_Update" Start="Main" Instance="0" />
+          </View>
+        </Views>
+        <Views Width="0.472" Height="0.512">
+          <View Type="ImageView">
+            <Output Name="con_ba49c5fc_3b70_4a0a_90ce_0b4c91318d57" Macro="_1_Update" Start="Main" Instance="0" />
+            <ViewState>
+              <PostProcessing Method="Normalize" />
+            </ViewState>
+          </View>
+        </Views>
+      </VSplit>
+    </HSplit>
+  </ViewSet>
+  <ViewSet Name="Custom2">
+    <VSplit>
+      <Views Width="0.486" Height="0.998">
+        <View />
+        <View Type="ImageView">
+          <Output Name="con_2e27ccaf_c323_4004_b05c_5603fbf120dd" Macro="_FindFeatures" Start="Main" Instance="0" />
+          <Input Name="inFeatLoc_Left" Index="7" Section="Process" Macro="_1_Update" Start="Main" Instance="0" />
+          <Output Name="con_e623f8e5_6de4_45cd_9339_2a6c9d4461cf" Macro="_FindFeatures" Start="Main" Instance="0" />
+          <Output Name="con_cb659220_9b2d_4064_8aef_4e4e9d06aa6c" Macro="_FindFeatures" Start="Main" Instance="0" />
+          <ViewState>
+            <ViewMode Mode="Manual" Scale="0.0666666666666667" X="27" Y="287" />
+            <PostProcessing Method="Normalize" />
+          </ViewState>
+        </View>
+        <View />
+        <View />
+      </Views>
+      <Views Width="0.508" Height="0.998">
+        <View />
+      </Views>
+    </VSplit>
+  </ViewSet>
+  <ViewSet Name="Custom3">
+    <HSplit>
+      <VSplit>
+        <Views Width="0.498" Height="0.496">
+          <View />
+        </Views>
+        <Views Width="0.496" Height="0.496">
+          <View />
+        </Views>
+      </VSplit>
+      <VSplit>
+        <Views Width="0.498" Height="0.496">
+          <View />
+        </Views>
+        <Views Width="0.496" Height="0.496">
+          <View />
+        </Views>
+      </VSplit>
+    </HSplit>
+  </ViewSet>
+</ViewSets>
