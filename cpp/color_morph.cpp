@@ -42,9 +42,9 @@ std::atomic<float> ShearLeft;
 std::atomic<float> ShearRight;
 std::atomic<bool> SamplLeftReady;
 std::atomic<bool> SamplRightReady;
-static avl::Image g_constData1;
+static avl::Path g_constData1;
 static avl::Path g_constData2;
-static avl::Path g_constData3;
+static avl::Image g_constData3;
 static atl::String g_constData4;
 static atl::String g_constData5;
 static atl::String g_constData6;
@@ -86,17 +86,17 @@ void InitMainConsts( void )
 	
 	SamplRightReady = false;
 	
-	avs::ReadDataFromFile( u"color_morph.8132876a.avdata", u"Image", g_constData1 );
+	avs::ReadDataFromFile( u"color_morph.d69ebdbe.avdata", u"Path", g_constData1 );
 	
-	avs::ReadDataFromFile( u"color_morph.f42ce6c2.avdata", u"Path", g_constData2 );
+	avs::ReadDataFromFile( u"color_morph.bc811825.avdata", u"Path", g_constData2 );
 	
-	avs::ReadDataFromFile( u"color_morph.92c2f609.avdata", u"Path", g_constData3 );
+	avs::ReadDataFromFile( u"color_morph.8132876a.avdata", u"Image", g_constData3 );
 	
-	g_constData4 = u"..\\..\\..\\Data\\Datasets\\kolor\\bad_color_morph\\T\\480586!480586 SIG-6_X01 F.W-1\\480586!480586 SIG-6_X01 F.W-1_LAB.tif";
+	g_constData4 = u"C:\\Users\\Gabriel Ceballos\\Desktop\\Walstead(D)\\Dataset\\kolor\\480586!480586 SIG-5_X01 F\\T\\template.tif";
 	
-	g_constData5 = u"..\\..\\..\\Data\\Datasets\\kolor\\bad_color_morph\\left.tif";
+	g_constData5 = u"C:\\Users\\Gabriel Ceballos\\Desktop\\Walstead(D)\\Dataset\\kolor\\480586!480586 SIG-5_X01 F\\L";
 	
-	g_constData6 = u"..\\..\\..\\Data\\Datasets\\kolor\\bad_color_morph\\right.tif";
+	g_constData6 = u"C:\\Users\\Gabriel Ceballos\\Desktop\\Walstead(D)\\Dataset\\kolor\\480586!480586 SIG-5_X01 F\\R";
 }
 
 void __ConvertLabToMono( __ConvertLabToMonoState& state, const avl::Image& inImg, avl::Image& outMonoImg )
@@ -1031,25 +1031,18 @@ void _1_Update( _1_UpdateState& state, const avl::Image&, const avl::Image& inFr
 	avl::MirrorImage( state.image8, avl::MirrorDirection::Both, outTempl );
 }
 
-void _PrepareStripeModel( avl::GrayModel& outStripeModel, avl::GrayModel& outStripeModel_single_camera )
-{
-	// Create QI stripe GrayModel
-	avl::CreateGrayModel( g_constData1, atl::NIL, atl::NIL, 0, atl::NIL, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, outStripeModel, atl::NIL, atl::Dummy< atl::Array< avl::Image > >().Get() );
-	
-	outStripeModel_single_camera = outStripeModel;
-}
-
-void _CropTempl( _CropTemplState& state, const avl::Image& inTemplLab, const avl::Point2D& inPrescaler, int inMarginUp, int inMarginDown, const avl::Image& inTemplMono, const avl::GrayModel& inStripeModel, atl::Conditional< avl::Point2D >& outTemplStripeLoc, atl::Conditional< avl::Image >& outTemplLab )
+void _X_CropBleeds( _X_CropBleedsState& state, const avl::Image& inTempl, avl::Image& outTempl )
 {
 	atl::Conditional< avl::Edge1D > edge1D1;
 	
-	avl::ScanSingleEdge_Direct( inTemplMono, g_constData2, atl::NIL, 5, avl::SamplingParams(avl::InterpolationMethod::Bilinear, 5.0f, atl::NIL), avl::EdgeScanParams(avl::ProfileInterpolationMethod::Quadratic4, 0.0f, 5.0f, avl::EdgeTransition::Any), avl::Selection::First, atl::NIL, edge1D1, atl::NIL, atl::Dummy<avl::Profile>().Get(), atl::Dummy<avl::Profile>().Get(), atl::Dummy< atl::Array< avl::Path > >().Get(), atl::Dummy<float>().Get() );
+	__ConvertLabToMono( state.___ConvertLabToMonoState1, inTempl, state.image1 );
+	avl::ScanSingleEdge_Direct( state.image1, g_constData1, atl::NIL, 5, avl::SamplingParams(avl::InterpolationMethod::Bilinear, 5.0f, atl::NIL), avl::EdgeScanParams(avl::ProfileInterpolationMethod::Quadratic4, 0.0f, 5.0f, avl::EdgeTransition::Any), avl::Selection::First, atl::NIL, edge1D1, atl::NIL, atl::Dummy<avl::Profile>().Get(), atl::Dummy<avl::Profile>().Get(), atl::Dummy< atl::Array< avl::Path > >().Get(), atl::Dummy<float>().Get() );
 	
 	if (edge1D1 != atl::NIL)
 	{
 		atl::Conditional< avl::Edge1D > edge1D2;
 		
-		avl::ScanSingleEdge_Direct( inTemplMono, g_constData3, atl::NIL, 5, avl::SamplingParams(avl::InterpolationMethod::Bilinear, 5.0f, atl::NIL), avl::EdgeScanParams(avl::ProfileInterpolationMethod::Quadratic4, 0.0f, 5.0f, avl::EdgeTransition::Any), avl::Selection::First, atl::NIL, edge1D2, atl::NIL, atl::Dummy<avl::Profile>().Get(), atl::Dummy<avl::Profile>().Get(), atl::Dummy< atl::Array< avl::Path > >().Get(), atl::Dummy<float>().Get() );
+		avl::ScanSingleEdge_Direct( state.image1, g_constData2, atl::NIL, 5, avl::SamplingParams(avl::InterpolationMethod::Bilinear, 5.0f, atl::NIL), avl::EdgeScanParams(avl::ProfileInterpolationMethod::Quadratic4, 0.0f, 5.0f, avl::EdgeTransition::Any), avl::Selection::First, atl::NIL, edge1D2, atl::NIL, atl::Dummy<avl::Profile>().Get(), atl::Dummy<avl::Profile>().Get(), atl::Dummy< atl::Array< avl::Path > >().Get(), atl::Dummy<float>().Get() );
 		
 		if (edge1D2 != atl::NIL)
 		{
@@ -1057,54 +1050,69 @@ void _CropTempl( _CropTemplState& state, const avl::Image& inTemplLab, const avl
 			float real1;
 			float real2;
 			float real3;
-			float real4;
-			float real5;
-			int integer2;
-			int integer3;
-			avl::Box box1;
-			atl::Conditional< avl::Object2D > object2D1;
 			
-			outTemplLab.AssignNonNil();
+			state.image2.AssignNonNil();
 			
-			integer1 = inTemplLab.Height();
-			real1 = inPrescaler.X();
-			real2 = inPrescaler.Y();
-			real3 = edge1D1.Get().Point().X();
-			real4 = edge1D2.Get().Point().X();
-			avl::SubtractReals( real4, real3, real5 );
-			avl::Box box2 = avl::Box(static_cast<int>(real3), 0, static_cast<int>(real5), integer1);
-			avl::CropImage( inTemplLab, box2, avl::Pixel(0.0f, 0.0f, 0.0f, 0.0f), state.image1 );
-			avl::MirrorImage( state.image1, avl::MirrorDirection::Both, state.image2 );
-			avl::ResizeImage_Relative( state.image2, real1, real2, avl::ResizeMethod::Bilinear, state.image3 );
-			integer2 = state.image3.Width();
-			integer3 = state.image3.Height();
-			box1 = avl::Box(0, inMarginUp, integer2, integer3 - inMarginUp - inMarginDown);
-			avl::CropImage( state.image3, box1, avl::Pixel(255.0f, 255.0f, 255.0f, 0.0f), outTemplLab.Get() );
-			__ConvertLabToMono( state.___ConvertLabToMonoState1, outTemplLab.Get(), state.image4 );
-			avl::LocateSingleObject_NCC( state.image4, atl::NIL, atl::NIL, inStripeModel, 1, atl::NIL, false, 0.7f, atl::NIL, atl::NIL, object2D1, atl::NIL, atl::NIL, atl::Dummy< atl::Array< avl::Image > >().Get(), atl::Dummy< atl::Array< avl::Image > >().Get(), atl::Dummy< atl::Conditional< atl::Array< float > > >().Get() );
-			
-			if (object2D1 != atl::NIL)
-			{
-				outTemplStripeLoc.AssignNonNil();
-				
-				outTemplStripeLoc.Get() = object2D1.Get().Match().Origin();
-			}
-			else
-			{
-				outTemplStripeLoc = atl::NIL;
-			}
+			integer1 = inTempl.Height();
+			real1 = edge1D1.Get().Point().X();
+			real2 = edge1D2.Get().Point().X();
+			avl::SubtractReals( real2, real1, real3 );
+			avl::Box box1 = avl::Box(static_cast<int>(real1), 0, static_cast<int>(real3), integer1);
+			avl::CropImage( inTempl, box1, avl::Pixel(0.0f, 0.0f, 0.0f, 0.0f), state.image2.Get() );
 		}
 		else
 		{
-			outTemplLab = atl::NIL;
-			outTemplStripeLoc = atl::NIL;
+			state.image2 = atl::NIL;
 		}
 	}
 	else
 	{
-		outTemplLab = atl::NIL;
+		state.image2 = atl::NIL;
+	}
+	
+	avl::MergeDefault< avl::Image >( state.image2, inTempl, outTempl );
+}
+
+void _PrepareStripeModel( avl::GrayModel& outStripeModel, avl::GrayModel& outStripeModel_single_camera )
+{
+	// Create QI stripe GrayModel
+	avl::CreateGrayModel( g_constData3, atl::NIL, atl::NIL, 0, atl::NIL, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, outStripeModel, atl::NIL, atl::Dummy< atl::Array< avl::Image > >().Get() );
+	
+	outStripeModel_single_camera = outStripeModel;
+}
+
+void _CropTempl( _CropTemplState& state, const avl::Image& inTemplLab, const avl::Point2D& inPrescaler, int inMarginUp, int inMarginDown, const avl::GrayModel& inStripeModel, atl::Conditional< avl::Point2D >& outTemplStripeLoc, atl::Conditional< avl::Image >& outTemplLab )
+{
+	float real1;
+	float real2;
+	int integer1;
+	int integer2;
+	avl::Box box1;
+	atl::Conditional< avl::Object2D > object2D1;
+	
+	avl::MirrorImage( inTemplLab, avl::MirrorDirection::Both, state.image1 );
+	real1 = inPrescaler.X();
+	real2 = inPrescaler.Y();
+	avl::ResizeImage_Relative( state.image1, real1, real2, avl::ResizeMethod::Bilinear, state.image2 );
+	integer1 = state.image2.Width();
+	integer2 = state.image2.Height();
+	box1 = avl::Box(0, inMarginUp, integer1, integer2 - inMarginUp - inMarginDown);
+	avl::CropImage( state.image2, box1, avl::Pixel(255.0f, 255.0f, 255.0f, 0.0f), state.image3 );
+	__ConvertLabToMono( state.___ConvertLabToMonoState1, state.image3, state.image4 );
+	avl::LocateSingleObject_NCC( state.image4, atl::NIL, atl::NIL, inStripeModel, 1, atl::NIL, false, 0.7f, atl::NIL, atl::NIL, object2D1, atl::NIL, atl::NIL, atl::Dummy< atl::Array< avl::Image > >().Get(), atl::Dummy< atl::Array< avl::Image > >().Get(), atl::Dummy< atl::Conditional< atl::Array< float > > >().Get() );
+	
+	if (object2D1 != atl::NIL)
+	{
+		outTemplStripeLoc.AssignNonNil();
+		
+		outTemplStripeLoc.Get() = object2D1.Get().Match().Origin();
+	}
+	else
+	{
 		outTemplStripeLoc = atl::NIL;
 	}
+	
+	outTemplLab = state.image3;
 }
 
 void _PrepareLRTemplates( _PrepareLRTemplatesState& state, atl::Conditional< avl::Image >& outTempl_Left, atl::Conditional< avl::Image >& outTempl_Right )
@@ -1215,20 +1223,19 @@ void _0_Init( _0_InitState& state, const avl::Image& inTempl )
 {
 	atl::Conditional< avl::Point2D > point2D1;
 	
-	__ConvertLabToMono( state.___ConvertLabToMonoState1, inTempl, state.image1 );
 	_PrepareStripeModel( state.grayModel1, state.grayModel2 );
 	StripeModel.SetValue(state.grayModel1);
 	StripeModel_SingleCam.SetValue(state.grayModel2);
-	_CropTempl( state.__CropTemplState1, inTempl, Prescaler, MarginUp, MarginDown, state.image1, state.grayModel1, point2D1, state.image2 );
+	_CropTempl( state.__CropTemplState1, inTempl, Prescaler, MarginUp, MarginDown, state.grayModel1, point2D1, state.image1 );
 	
-	if (state.image2 != atl::NIL)
+	if (state.image1 != atl::NIL)
 	{
-		__ConvertLabToMono( state.___ConvertLabToMonoState2, state.image2.Get(), state.image3 );
-		avl::CropImage( state.image3, avl::Box(1405, 434, 621, 13), avl::Pixel(0.0f, 0.0f, 0.0f, 0.0f), state.image4 );
+		__ConvertLabToMono( state.___ConvertLabToMonoState1, state.image1.Get(), state.image2 );
+		avl::CropImage( state.image2, avl::Box(1405, 434, 621, 13), avl::Pixel(0.0f, 0.0f, 0.0f, 0.0f), state.image3 );
 		
 		if (point2D1 != atl::NIL)
 		{
-			Templ.SetValue(state.image2.Get());
+			Templ.SetValue(state.image1.Get());
 			TemplStripeLoc.store(point2D1.Get());
 		}
 	}
@@ -1236,27 +1243,27 @@ void _0_Init( _0_InitState& state, const avl::Image& inTempl )
 	// Cutting Template for Left and Right Camera
 	// 
 	// (at the beginning and everytime the template is adjusted - _Main_3_Update).
-	_PrepareLRTemplates( state.__PrepareLRTemplatesState1, state.image5, state.image6 );
+	_PrepareLRTemplates( state.__PrepareLRTemplatesState1, state.image4, state.image5 );
 	
-	if (state.image5 != atl::NIL)
+	if (state.image4 != atl::NIL)
 	{
 		state.point2DArray1.AssignNonNil();
 		
-		__ConvertLabToMono( state.___ConvertLabToMonoState3, state.image5.Get(), state.image7 );
-		_FindFeatures( state.__FindFeaturesState1, state.image7, state.point2DArray1.Get() );
+		__ConvertLabToMono( state.___ConvertLabToMonoState2, state.image4.Get(), state.image6 );
+		_FindFeatures( state.__FindFeaturesState1, state.image6, state.point2DArray1.Get() );
 	}
 	else
 	{
 		state.point2DArray1 = atl::NIL;
 	}
 	
-	if (state.image6 != atl::NIL)
+	if (state.image5 != atl::NIL)
 	{
-		__ConvertLabToMono( state.___ConvertLabToMonoState4, state.image6.Get(), state.image8 );
+		__ConvertLabToMono( state.___ConvertLabToMonoState3, state.image5.Get(), state.image7 );
 		
 		if (state.point2DArray1 != atl::NIL)
 		{
-			_FindFeatures( state.__FindFeaturesState2, state.image8, state.point2DArray2 );
+			_FindFeatures( state.__FindFeaturesState2, state.image7, state.point2DArray2 );
 			FeatLoc_Left.SetValue(state.point2DArray1.Get());
 			FeatLoc_Right.SetValue(state.point2DArray2);
 		}
@@ -1270,20 +1277,41 @@ void _0_Init( _0_InitState& state, const avl::Image& inTempl )
 
 void Main( void )
 {
+	atl::String file1;
 	avl::Image image1;
-	_0_InitState __0_InitState1;
+	_X_CropBleedsState __X_CropBleedsState1;
 	avl::Image image2;
+	_0_InitState __0_InitState1;
+	avl::EnumerateFilesState enumerateImagesState1;
 	avl::Image image3;
-	_1_UpdateState __1_UpdateState1;
+	atl::String file2;
+	atl::String string1;
+	avl::EnumerateFilesState enumerateImagesState2;
 	avl::Image image4;
+	atl::String file3;
+	atl::String string2;
+	_1_UpdateState __1_UpdateState1;
+	avl::Image image5;
 	
-	avl::LoadImage( g_constData4, false, image1 );
+	avl::CopyObject< atl::String >( g_constData4, file1 );
+	avl::LoadImage( file1, false, image1 );
+	_X_CropBleeds( __X_CropBleedsState1, image1, image2 );
 	_0_Init( __0_InitState1, image1 );
-	avl::LoadImage( g_constData5, false, image2 );
-	avl::LoadImage( g_constData6, false, image3 );
 	
-	// Wykonywane na żądanie
-	_1_Update( __1_UpdateState1, image1, image2, image3, image4 );
+	for(;;)
+	{
+		if (!avl::EnumerateImages( enumerateImagesState1, g_constData5, atl::NIL, avl::FileSortingOrder::Name, false, false, false, false, 0, image3, file2, string1, atl::NIL, atl::NIL ))
+		{
+			break;
+		}
+		if (!avl::EnumerateImages( enumerateImagesState2, g_constData6, atl::NIL, avl::FileSortingOrder::Name, false, false, false, false, 0, image4, file3, string2, atl::NIL, atl::NIL ))
+		{
+			break;
+		}
+		
+		// Wykonywane na żądanie
+		_1_Update( __1_UpdateState1, image2, image3, image4, image5 );
+	}
 }
 
 void __CheckEntireSampl_Left( __CheckEntireSampl_LeftState& state, const avl::Image& inFrameLeft, bool& outHasEntireSampl, atl::Conditional< avl::Image >& outSampl )

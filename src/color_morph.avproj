@@ -1,7 +1,7 @@
 ﻿<AdaptiveVisionProject Name="color_morph" Version="5.1.9" Revision="89206" Product="Professional" StartUpProgramName="Main">
   <CodeGeneratorSettings>
     <ProgramName>color_morph</ProgramName>
-    <OutputPath>C:\Users\Gabriel Ceballos\Nextcloud\Industry\2008_Walstead(D)\AVS\color_morph\cpp</OutputPath>
+    <OutputPath>C:\Users\Gabriel Ceballos\Desktop\Walstead(D)\Git\avs-color-morph\cpp</OutputPath>
     <NoProjectGeneration>True</NoProjectGeneration>
   </CodeGeneratorSettings>
   <Files>

@@ -184,6 +184,13 @@ struct _1_UpdateState
 	avl::Image image8;
 };
 
+struct _X_CropBleedsState
+{
+	__ConvertLabToMonoState ___ConvertLabToMonoState1;
+	avl::Image image1;
+	atl::Conditional< avl::Image > image2;
+};
+
 struct _CropTemplState
 {
 	avl::Image image1;
@@ -209,24 +216,22 @@ struct _PrepareLRTemplatesState
 
 struct _0_InitState
 {
-	__ConvertLabToMonoState ___ConvertLabToMonoState1;
-	avl::Image image1;
 	avl::GrayModel grayModel1;
 	avl::GrayModel grayModel2;
 	_CropTemplState __CropTemplState1;
-	atl::Conditional< avl::Image > image2;
-	__ConvertLabToMonoState ___ConvertLabToMonoState2;
+	atl::Conditional< avl::Image > image1;
+	__ConvertLabToMonoState ___ConvertLabToMonoState1;
+	avl::Image image2;
 	avl::Image image3;
-	avl::Image image4;
 	_PrepareLRTemplatesState __PrepareLRTemplatesState1;
+	atl::Conditional< avl::Image > image4;
 	atl::Conditional< avl::Image > image5;
-	atl::Conditional< avl::Image > image6;
 	atl::Conditional< atl::Array< avl::Point2D > > point2DArray1;
+	__ConvertLabToMonoState ___ConvertLabToMonoState2;
+	avl::Image image6;
+	_FindFeaturesState __FindFeaturesState1;
 	__ConvertLabToMonoState ___ConvertLabToMonoState3;
 	avl::Image image7;
-	_FindFeaturesState __FindFeaturesState1;
-	__ConvertLabToMonoState ___ConvertLabToMonoState4;
-	avl::Image image8;
 	_FindFeaturesState __FindFeaturesState2;
 	atl::Array< avl::Point2D > point2DArray2;
 	_PrepareLRSearchTilesState __PrepareLRSearchTilesState1;
@@ -324,8 +329,9 @@ void _UpdateOneSide( _UpdateOneSideState& state, const avl::Image& inRef, const 
 void __CropSearchTiles( const avl::Point2D& inPoint, int inSearchSize, const avl::Image& inRefImage, avl::InterpolationMethod::Type inInterpolation, avl::Image& outSearchTiles );
 void _PrepareLRSearchTiles( _PrepareLRSearchTilesState& state );
 void _1_Update( _1_UpdateState& state, const avl::Image& inTempl, const avl::Image& inFrameLeft, const avl::Image& inFrameRight, avl::Image& outTempl );
+void _X_CropBleeds( _X_CropBleedsState& state, const avl::Image& inTempl, avl::Image& outTempl );
 void _PrepareStripeModel( avl::GrayModel& outStripeModel, avl::GrayModel& outStripeModel_single_camera );
-void _CropTempl( _CropTemplState& state, const avl::Image& inTemplLab, const avl::Point2D& inPrescaler, int inMarginUp, int inMarginDown, const avl::Image& inTemplMono, const avl::GrayModel& inStripeModel, atl::Conditional< avl::Point2D >& outTemplStripeLoc, atl::Conditional< avl::Image >& outTemplLab );
+void _CropTempl( _CropTemplState& state, const avl::Image& inTemplLab, const avl::Point2D& inPrescaler, int inMarginUp, int inMarginDown, const avl::GrayModel& inStripeModel, atl::Conditional< avl::Point2D >& outTemplStripeLoc, atl::Conditional< avl::Image >& outTemplLab );
 void _PrepareLRTemplates( _PrepareLRTemplatesState& state, atl::Conditional< avl::Image >& outTempl_Left, atl::Conditional< avl::Image >& outTempl_Right );
 void _0_Init( _0_InitState& state, const avl::Image& inTempl );
 void Main( void );
